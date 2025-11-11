@@ -1,0 +1,231 @@
+import { useState } from "react";
+import { Mail, Phone, MapPin, Send, Github, Linkedin, Twitter, Globe } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+
+const Contact = () => {
+  const { toast } = useToast();
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "", 
+    message: ""
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Handle form submission here
+    toast({
+      title: "Message Sent!",
+      description: "Thank you for your message. I'll get back to you soon.",
+    });
+    setFormData({ name: "", email: "", message: "" });
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const contactInfo = [
+    {
+      icon: Mail,
+      label: "Email",
+      value: "ashaduzzaman@example.com",
+      href: "mailto:ashaduzzaman@example.com"
+    },
+    {
+      icon: Phone, 
+      label: "Phone",
+      value: "+880 123 456 7890",
+      href: "tel:+8801234567890"
+    },
+    {
+      icon: MapPin,
+      label: "Location",
+      value: "Dhaka, Bangladesh",
+      href: "#"
+    }
+  ];
+
+  const socialLinks = [
+    {
+      icon: Github,
+      label: "GitHub",
+      href: "https://github.com",
+      color: "hover:text-gray-900"
+    },
+    {
+      icon: Linkedin,
+      label: "LinkedIn",
+      href: "https://linkedin.com",
+      color: "hover:text-blue-600"
+    },
+    {
+      icon: Twitter,
+      label: "Twitter",
+      href: "https://twitter.com",
+      color: "hover:text-blue-400"
+    },
+    {
+      icon: Globe,
+      label: "Website",
+      href: "https://example.com",
+      color: "hover:text-primary"
+    }
+  ];
+
+  return (
+    <section id="contact" className="py-20 bg-secondary/30">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16 animate-fade-in-up">
+          <h2 className="section-heading">Get In Touch</h2>
+          <div className="w-20 h-1 bg-gradient-to-r from-primary to-hero-gradient-to mx-auto rounded-full mb-4"></div>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Ready to start your next project? Let's discuss how I can help bring your vision to life
+          </p>
+        </div>
+
+        <div className="grid lg:grid-cols-2 gap-12">
+          {/* Contact Information */}
+          <div className="animate-fade-in-left">
+            <h3 className="text-2xl font-semibold mb-8 text-foreground">
+              Let's Start a Conversation
+            </h3>
+            
+            <div className="space-y-6 mb-8">
+              <p className="text-muted-foreground leading-relaxed">
+                I'm always interested in hearing about new projects and opportunities. 
+                Whether you have a specific project in mind or just want to explore possibilities, 
+                feel free to reach out. I'd love to hear from you!
+              </p>
+              
+              <p className="text-muted-foreground leading-relaxed">
+                With 8+ years of experience in WordPress development and a track record of 
+                successful international collaborations, I'm confident we can create something amazing together.
+              </p>
+            </div>
+
+            {/* Contact Info */}
+            <div className="space-y-4 mb-8">
+              {contactInfo.map((info, index) => {
+                const IconComponent = info.icon;
+                return (
+                  <div key={index} className="flex items-center space-x-4">
+                    <div className="flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg">
+                      <IconComponent className="w-6 h-6 text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground">{info.label}</p>
+                      <a
+                        href={info.href}
+                        className="text-foreground hover:text-primary transition-colors font-medium"
+                      >
+                        {info.value}
+                      </a>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Social Links */}
+            <div className="space-y-4">
+              <h4 className="text-lg font-semibold text-foreground">Follow Me</h4>
+              <div className="flex space-x-4">
+                {socialLinks.map((social, index) => {
+                  const IconComponent = social.icon;
+                  return (
+                    <a
+                      key={index}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`flex items-center justify-center w-12 h-12 bg-background border border-border rounded-lg hover:shadow-medium transition-all duration-200 hover:-translate-y-1 ${social.color}`}
+                      aria-label={social.label}
+                    >
+                      <IconComponent className="w-5 h-5" />
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+          {/* Contact Form */}
+          <div className="animate-fade-in-right">
+            <form onSubmit={handleSubmit} className="bg-background rounded-2xl shadow-large p-8 border border-border">
+              <div className="space-y-6">
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
+                    Full Name *
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 bg-background border border-input rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none"
+                    placeholder="Enter your full name"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
+                    Email Address *
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 bg-background border border-input rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none"
+                    placeholder="Enter your email address"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
+                    Message *
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    rows={6}
+                    className="w-full px-4 py-3 bg-background border border-input rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none resize-none"
+                    placeholder="Tell me about your project or inquiry..."
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full btn-primary group justify-center"
+                >
+                  <Send size={20} />
+                  <span>Send Message</span>
+                  <Send size={16} className="group-hover:translate-x-1 transition-transform" />
+                </button>
+              </div>
+            </form>
+
+            {/* Additional Info */}
+            <div className="mt-6 p-4 bg-primary/5 border border-primary/10 rounded-lg">
+              <p className="text-sm text-muted-foreground text-center">
+                <strong>Response Time:</strong> I typically respond to all inquiries within 24 hours during business days.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Contact;
