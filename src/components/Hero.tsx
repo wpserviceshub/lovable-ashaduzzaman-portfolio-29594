@@ -109,29 +109,49 @@ const Hero = () => {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-hero-buttons">
-              <button className="btn-primary group hover:scale-105 transition-all duration-300">
+              <a
+                href="https://www.upwork.com/freelancers/~0180789829db368345"
+                target="_blank"
+                rel="noreferrer"
+                className="btn-primary group inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 font-medium transition-all duration-300 hover:scale-105"
+              >
                 <Briefcase size={20} />
                 <span>Upwork</span>
                 <ExternalLink size={16} className="group-hover:translate-x-0.5 transition-transform" />
-              </button>
+              </a>
               
-              <button className="btn-secondary group hover:scale-105 transition-all duration-300">
+              <a
+                href="https://www.freelancer.com/u/creativeit531410"
+                target="_blank"
+                rel="noreferrer"
+                className="btn-secondary group inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 font-medium transition-all duration-300 hover:scale-105"
+              >
                 <Code size={20} />
                 <span>Freelancer</span>
                 <ExternalLink size={16} className="group-hover:translate-x-0.5 transition-transform" />
-              </button>
+              </a>
               
-              <button className="btn-secondary group hover:scale-105 transition-all duration-300">
+              <a
+                href="https://calendly.com/mukuldiu531410-cse/30min"
+                target="_blank"
+                rel="noreferrer"
+                className="btn-secondary group inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 font-medium transition-all duration-300 hover:scale-105"
+              >
                 <CalendarDays size={20} />
                 <span>Schedule Call</span>
                 <ExternalLink size={16} className="group-hover:translate-x-0.5 transition-transform" />
-              </button>
+              </a>
               
-              <button className="btn-secondary group hover:scale-105 transition-all duration-300">
+              <a
+                href="/lovable-uploads/Ashaduzzaman_Resume.pdf"
+                target="_blank"
+                rel="noreferrer"
+                className="btn-secondary group inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 font-medium transition-all duration-300 hover:scale-105"
+              >
                 <Download size={20} />
                 <span>Resume</span>
                 <ExternalLink size={16} className="group-hover:translate-x-0.5 transition-transform" />
-              </button>
+              </a>
             </div>
           </div>
 
