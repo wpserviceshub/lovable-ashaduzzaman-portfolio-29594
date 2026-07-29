@@ -1,5 +1,5 @@
-import { useParams } from "react-router-dom";
-import { ExternalLink, Github } from "lucide-react";
+import { Link, useParams } from "react-router-dom";
+import { ArrowLeft, ExternalLink, Github } from "lucide-react";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 import { getProjectBySlug } from "../data/projects";
@@ -29,6 +29,14 @@ const ProjectDetails = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
       <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 py-24 sm:px-6 lg:px-8">
+        <Link
+          to="/projects"
+          className="inline-flex w-fit items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back to projects
+        </Link>
+
         <div className="relative overflow-hidden rounded-[2rem] border border-border/70 bg-card p-2 shadow-[0_30px_80px_-25px_rgba(15,23,42,0.25)]">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-accent/20" />
           <img

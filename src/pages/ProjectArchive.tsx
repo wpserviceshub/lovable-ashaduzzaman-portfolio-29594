@@ -19,43 +19,88 @@ const ProjectArchive = () => {
         </div>
 
         <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-          {projects.map((project) => {
+          {projects.map((project, index) => {
             const projectSlug = slugify(project.title);
 
             return (
-              <div key={project.id} className="overflow-hidden rounded-2xl border border-border bg-card shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-large">
+              <div
+                key={project.id}
+                className="project-card animate-fade-in-up group"
+                style={{ animationDelay: `${index * 150}ms` }}
+              >
                 <div className="relative overflow-hidden">
-                  <Link to={`/projects/${projectSlug}`}>
-                    <img src={project.image} alt={project.title} className="h-48 w-full object-cover transition-transform duration-500 hover:scale-110" />
-                  </Link>
-                  <div className="absolute left-4 top-4 rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-foreground">
-                    {project.category}
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="h-48 w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center bg-primary/80 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    <div className="flex space-x-4">
+                      <Link
+                        to={`/projects/${projectSlug}`}
+                        className="rounded-full bg-background p-2 shadow-lg transition-all duration-200 hover:scale-110 hover:shadow-xl"
+                        aria-label={`View details for ${project.title}`}
+                      >
+                        <Eye className="h-5 w-5 text-primary" />
+                      </Link>
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="rounded-full bg-background p-2 shadow-lg transition-all duration-200 hover:scale-110 hover:shadow-xl"
+                      >
+                        <ExternalLink className="h-5 w-5 text-primary" />
+                      </a>
+                      <a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="rounded-full bg-background p-2 shadow-lg transition-all duration-200 hover:scale-110 hover:shadow-xl"
+                      >
+                        <Github className="h-5 w-5 text-primary" />
+                      </a>
+                    </div>
                   </div>
                 </div>
 
                 <div className="p-6">
-                  <Link to={`/projects/${projectSlug}`} className="group">
-                    <h2 className="mb-3 text-xl font-semibold text-foreground transition-colors group-hover:text-primary">
-                      {project.title}
-                    </h2>
-                  </Link>
-                  <p className="mb-4 text-muted-foreground">{project.description}</p>
-                  <div className="mb-5 flex flex-wrap gap-2">
+                  <div className="mb-3 flex items-center justify-between">
+                    <Link to={`/projects/${projectSlug}`} className="group/title">
+                      <h2 className="text-xl font-semibold text-foreground transition-colors group-hover/title:text-primary">
+                        {project.title}
+                      </h2>
+                    </Link>
+                    <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+                      {project.category}
+                    </span>
+                  </div>
+
+                  <p className="mb-4 leading-relaxed text-muted-foreground">{project.description}</p>
+
+                  <div className="mb-4 flex flex-wrap gap-2">
                     {project.technologies.slice(0, 4).map((tech) => (
-                      <span key={tech} className="rounded-full bg-secondary px-3 py-1 text-xs text-secondary-foreground">
+                      <span key={tech} className="rounded-md bg-secondary px-2 py-1 text-xs text-secondary-foreground">
                         {tech}
                       </span>
                     ))}
                   </div>
-                  <div className="flex items-center gap-3">
-                    <Link to={`/projects/${projectSlug}`} className="inline-flex items-center gap-2 font-medium text-primary">
-                      <Eye className="h-4 w-4" /> View Details
+
+                  <div className="flex space-x-3">
+                    <Link
+                      to={`/projects/${projectSlug}`}
+                      className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-primary-foreground transition-colors hover:bg-primary/90"
+                    >
+                      <Eye size={16} />
+                      View Details
                     </Link>
-                    <a href={project.liveUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 font-medium text-muted-foreground hover:text-primary">
-                      <ExternalLink className="h-4 w-4" /> Live
-                    </a>
-                    <a href={project.githubUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 font-medium text-muted-foreground hover:text-primary">
-                      <Github className="h-4 w-4" /> Code
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex items-center justify-center gap-2 rounded-lg border border-border px-4 py-2 transition-colors hover:bg-accent"
+                    >
+                      <ExternalLink size={16} />
+                      Live
                     </a>
                   </div>
                 </div>

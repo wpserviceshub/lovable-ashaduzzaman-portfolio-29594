@@ -5,32 +5,32 @@ const Hero = () => {
     <section id="home" className="min-h-screen flex items-center justify-center hero-gradient relative overflow-hidden">
       {/* Tech-Inspired Animated Background */}
       <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none select-none z-0">
-        <div className="absolute inset-0 z-10 hero-content-scrim"></div>
+        <div className="absolute inset-0 z-10 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.10),transparent_45%),radial-gradient(circle_at_bottom_right,rgba(124,58,237,0.12),transparent_35%)]"></div>
         {/* Circuit Board Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 left-10 w-32 h-px bg-primary animate-circuit-flow"></div>
-          <div className="absolute top-20 left-44 w-px h-20 bg-primary animate-circuit-flow-delay-1"></div>
-          <div className="absolute top-40 left-44 w-24 h-px bg-hero-gradient-to animate-circuit-flow-delay-2"></div>
-          <div className="absolute top-60 right-20 w-40 h-px bg-primary-light animate-circuit-flow-delay-3"></div>
-          <div className="absolute top-60 right-20 w-px h-32 bg-hero-gradient-to animate-circuit-flow"></div>
-          <div className="absolute bottom-40 left-1/4 w-28 h-px bg-primary animate-circuit-flow-delay-1"></div>
-          <div className="absolute bottom-20 right-1/3 w-36 h-px bg-hero-gradient-to animate-circuit-flow-delay-2"></div>
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-20 left-10 h-px w-24 bg-primary/60 animate-circuit-flow"></div>
+          <div className="absolute top-20 left-34 h-16 w-px bg-primary/50 animate-circuit-flow-delay-1"></div>
+          <div className="absolute top-36 left-34 h-px w-16 bg-hero-gradient-to/60 animate-circuit-flow-delay-2"></div>
+          <div className="absolute top-60 right-20 h-px w-28 bg-primary-light/50 animate-circuit-flow-delay-3"></div>
+          <div className="absolute top-60 right-48 h-20 w-px bg-hero-gradient-to/50 animate-circuit-flow"></div>
+          <div className="absolute bottom-40 left-1/4 h-px w-20 bg-primary/50 animate-circuit-flow-delay-1"></div>
+          <div className="absolute bottom-24 right-1/3 h-px w-24 bg-hero-gradient-to/50 animate-circuit-flow-delay-2"></div>
         </div>
 
         {/* Floating Code Elements */}
-        <div className="absolute top-16 left-20 text-primary/20 font-mono text-sm animate-code-float-1">
+        <div className="absolute top-16 left-20 text-primary/15 font-mono text-sm animate-code-float-1">
           &lt;div className="hero"&gt;
         </div>
-        <div className="absolute top-32 right-24 text-hero-gradient-to/20 font-mono text-xs animate-code-float-2">
-          const developer = "Ashaduzzaman";
+        <div className="absolute top-32 right-24 text-hero-gradient-to/15 font-mono text-xs animate-code-float-2">
+          const developer = "Ashad";
         </div>
-        <div className="absolute bottom-40 left-16 text-primary-light/20 font-mono text-sm animate-code-float-3">
+        <div className="absolute bottom-40 left-16 text-primary-light/15 font-mono text-sm animate-code-float-3">
           function createMagic() {"{"}
         </div>
-        <div className="absolute bottom-24 right-32 text-primary/20 font-mono text-xs animate-code-float-1">
-          return "awesome portfolio";
+        <div className="absolute bottom-24 right-32 text-primary/15 font-mono text-xs animate-code-float-1">
+          return "portfolio";
         </div>
-        <div className="absolute top-1/2 left-8 text-hero-gradient-to/20 font-mono text-sm animate-code-float-2">
+        <div className="absolute top-1/2 left-8 text-hero-gradient-to/15 font-mono text-sm animate-code-float-2">
           &lt;/div&gt;
         </div>
 
@@ -39,27 +39,27 @@ const Hero = () => {
           01001000 01100101 01101100 01101100 01101111
         </div>
         <div className="absolute bottom-0 right-1/4 text-hero-gradient-to/10 font-mono text-xs animate-binary-flow-reverse">
-          01010111 01101111 01110010 01101100 01100100
+          01110111 01101111 01110010 01101011
         </div>
 
         {/* Geometric Tech Shapes */}
-        <div className="absolute top-1/4 right-1/3 w-8 h-8 border border-primary/20 rotate-45 animate-tech-rotate"></div>
-        <div className="absolute bottom-1/3 left-1/4 w-6 h-6 border border-hero-gradient-to/20 animate-tech-pulse"></div>
-        <div className="absolute top-2/3 right-1/4 w-10 h-10 border-2 border-primary-light/20 rounded-full animate-tech-orbit"></div>
+        <div className="absolute top-1/4 right-1/3 h-8 w-8 rotate-45 border border-primary/15 animate-tech-rotate"></div>
+        <div className="absolute bottom-1/3 left-1/4 h-6 w-6 border border-hero-gradient-to/15 animate-tech-pulse"></div>
+        <div className="absolute top-2/3 right-1/4 h-10 w-10 rounded-full border-2 border-primary-light/15 animate-tech-orbit"></div>
 
         {/* Data Nodes */}
-        <div className="absolute top-1/3 left-1/3 w-3 h-3 bg-primary/30 rounded-full animate-data-pulse">
-          <div className="absolute inset-0 bg-primary/20 rounded-full animate-ping"></div>
+        <div className="absolute top-1/3 left-1/3 h-3 w-3 rounded-full bg-primary/20 animate-data-pulse">
+          <div className="absolute inset-0 rounded-full bg-primary/10 animate-ping"></div>
         </div>
-        <div className="absolute bottom-1/4 right-1/3 w-2 h-2 bg-hero-gradient-to/40 rounded-full animate-data-pulse-delay">
-          <div className="absolute inset-0 bg-hero-gradient-to/20 rounded-full animate-ping"></div>
+        <div className="absolute bottom-1/4 right-1/3 h-2 w-2 rounded-full bg-hero-gradient-to/25 animate-data-pulse-delay">
+          <div className="absolute inset-0 rounded-full bg-hero-gradient-to/15 animate-ping"></div>
         </div>
-        <div className="absolute top-3/4 left-2/3 w-4 h-4 bg-primary-light/30 rounded-full animate-data-pulse-slow">
-          <div className="absolute inset-0 bg-primary-light/20 rounded-full animate-ping"></div>
+        <div className="absolute top-3/4 left-2/3 h-4 w-4 rounded-full bg-primary-light/20 animate-data-pulse-slow">
+          <div className="absolute inset-0 rounded-full bg-primary-light/10 animate-ping"></div>
         </div>
 
         {/* Gradient Tech Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-hero-gradient-to/5 animate-tech-gradient"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-hero-gradient-to/5 opacity-70 animate-tech-gradient"></div>
         
         {/* Matrix-style Falling Elements */}
         <div className="absolute top-0 left-1/4 text-primary/10 font-mono text-xs animate-matrix-fall">
@@ -86,23 +86,25 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-20">
-        <div className="grid lg:grid-cols-[1fr_auto] gap-12 items-center">
+      <div className="relative z-20 mx-auto flex min-h-screen w-full max-w-7xl flex-col justify-center px-4 py-20 sm:px-6 lg:px-8">
+        <div className="grid items-center gap-12 lg:grid-cols-[1fr_auto]">
           {/* Content */}
           <div className="text-center lg:text-left">
-            <h1 className="text-4xl md:text-6xl font-bold text-primary-foreground mb-6 animate-hero-title">
-              Hi, I'm{" "}<br />
-              <span className="bg-gradient-to-r from-primary-light to-hero-gradient-to bg-clip-text text-transparent animate-gradient-text">
-                Md Ashaduzzaman
-              </span>
+            <div className="mb-6 inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-sm font-medium text-primary-foreground/90 shadow-sm backdrop-blur-sm">
+              <span className="mr-2 h-2.5 w-2.5 rounded-full bg-primary" />
+              Available for freelance & long-term projects
+            </div>
+
+            <h1 className="mb-6 text-4xl font-bold leading-tight text-primary-foreground md:text-6xl animate-hero-title">
+              Building fast, modern, and conversion-focused digital experiences
             </h1>
-            
-            <h2 className="text-xl md:text-2xl text-primary-foreground/90 font-medium mb-6 animate-hero-subtitle">
-              Full-Stack WordPress Developer
+
+            <h2 className="mb-6 text-xl font-semibold text-primary-foreground/90 md:text-2xl animate-hero-subtitle">
+              Full-Stack WordPress Developer crafting websites for brands, startups, and growing businesses
             </h2>
-            
-            <p className="text-lg text-primary-foreground/80 mb-8 leading-relaxed max-w-lg animate-hero-description">
-              I have 10+ years of experience, and for the last 4 years I've been working globally with Kings Crest Global.
+
+            <p className="mb-8 max-w-2xl text-lg leading-relaxed text-primary-foreground/80 animate-hero-description">
+              I combine clean UI design, strong development foundations, and performance-driven WordPress solutions to create websites that look sharp and deliver results.
             </p>
 
             {/* CTA Buttons */}
@@ -149,9 +151,11 @@ const Hero = () => {
         </div>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-primary-foreground/50 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-primary-foreground/50 rounded-full mt-2"></div>
+        <div className="mt-12 flex justify-center lg:mt-16">
+          <div className="flex animate-bounce flex-col items-center justify-center">
+            <div className="flex h-10 w-6 items-center justify-center rounded-full border-2 border-primary-foreground/60">
+              <div className="mt-2 h-3 w-1 rounded-full bg-primary-foreground/60"></div>
+            </div>
           </div>
         </div>
       </div>
