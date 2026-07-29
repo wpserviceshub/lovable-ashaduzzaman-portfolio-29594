@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const navItems = [
     { id: "home", label: "Home" },
@@ -17,8 +20,8 @@ const Navigation = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = navItems.map(item => document.getElementById(item.id));
-      const scrollPosition = window.scrollY + 100;
+      const sections = navItems.map((item) => document.getElementById(item.id));
+      const scrollPosition = window.scrollY + 120;
 
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = sections[i];
@@ -29,25 +32,83 @@ const Navigation = () => {
       }
     };
 
+    const syncActiveSection = () => {
+      if (location.pathname === "/projects" || location.pathname.startsWith("/projects/")) {
+        setActiveSection("projects");
+        return;
+      }
+
+      if (location.pathname.startsWith("/articles")) {
+        setActiveSection("articles");
+        return;
+      }
+
+      if (location.pathname !== "/") {
+        setActiveSection("home");
+        return;
+      }
+
+      const currentHash = location.hash.replace("#", "");
+      const targetSection = navItems.some((item) => item.id === currentHash)
+        ? currentHash
+        : "home";
+
+      setActiveSection(targetSection);
+    };
+
+    handleScroll();
+    syncActiveSection();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [location.hash, location.pathname]);
 
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
     setIsOpen(false);
+    setActiveSection(sectionId);
+
+    const performScroll = () => {
+      if (sectionId === "home") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+      }
+
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+        return;
+      }
+
+      window.setTimeout(performScroll, 100);
+    };
+
+    if (sectionId === "home") {
+      if (location.pathname === "/") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        navigate("/", { replace: false });
+        window.setTimeout(performScroll, 200);
+      }
+      return;
+    }
+
+    if (location.pathname !== "/") {
+      navigate("/", { replace: false, hash: `#${sectionId}` });
+      window.setTimeout(performScroll, 250);
+      return;
+    }
+
+    performScroll();
   };
 
   return (
     <nav className="fixed top-0 left-0 right-0 bg-background/95 backdrop-blur-sm border-b border-border z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <div className="flex-shrink-0">
-            <img src="/logo.jpg" alt="Wp Services Hub" className="h-10 w-auto" />
-          </div>
+          <Link to="/" className="flex-shrink-0" aria-label="Go to home page">
+            <div className="flex h-11 w-11 items-center justify-center rounded-full border border-primary/20 bg-gradient-to-br from-primary to-accent text-sm font-bold tracking-[0.2em] text-primary-foreground shadow-sm">
+              MA
+            </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:block">

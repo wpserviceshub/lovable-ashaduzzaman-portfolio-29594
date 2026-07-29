@@ -1,4 +1,4 @@
-import { ExternalLink, Download, Briefcase } from "lucide-react";
+import { ExternalLink, Download, Briefcase, Code, CalendarDays } from "lucide-react";
 
 const Hero = () => {
   return (
@@ -87,11 +87,11 @@ const Hero = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-20">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid lg:grid-cols-[1fr_auto] gap-12 items-center">
           {/* Content */}
           <div className="text-center lg:text-left">
             <h1 className="text-4xl md:text-6xl font-bold text-primary-foreground mb-6 animate-hero-title">
-              Hi, I'm{" "}
+              Hi, I'm{" "}<br />
               <span className="bg-gradient-to-r from-primary-light to-hero-gradient-to bg-clip-text text-transparent animate-gradient-text">
                 Md Ashaduzzaman
               </span>
@@ -102,27 +102,33 @@ const Hero = () => {
             </h2>
             
             <p className="text-lg text-primary-foreground/80 mb-8 leading-relaxed max-w-lg animate-hero-description">
-              I have 8+ years of experience, and for the last 4 years I've been working globally with Kings Crest Global.
+              I have 10+ years of experience, and for the last 4 years I've been working globally with Kings Crest Global.
             </p>
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-hero-buttons">
               <button className="btn-primary group hover:scale-105 transition-all duration-300">
                 <Briefcase size={20} />
-                <span>Upwork Profile</span>
+                <span>Upwork</span>
                 <ExternalLink size={16} className="group-hover:translate-x-0.5 transition-transform" />
               </button>
               
               <button className="btn-secondary group hover:scale-105 transition-all duration-300">
-                <Briefcase size={20} />
+                <Code size={20} />
                 <span>Freelancer</span>
+                <ExternalLink size={16} className="group-hover:translate-x-0.5 transition-transform" />
+              </button>
+              
+              <button className="btn-secondary group hover:scale-105 transition-all duration-300">
+                <CalendarDays size={20} />
+                <span>Schedule Call</span>
                 <ExternalLink size={16} className="group-hover:translate-x-0.5 transition-transform" />
               </button>
               
               <button className="btn-secondary group hover:scale-105 transition-all duration-300">
                 <Download size={20} />
                 <span>Resume</span>
-                <Download size={16} className="group-hover:translate-y-0.5 transition-transform" />
+                <ExternalLink size={16} className="group-hover:translate-x-0.5 transition-transform" />
               </button>
             </div>
           </div>
@@ -133,7 +139,7 @@ const Hero = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-primary to-hero-gradient-to rounded-full blur-2xl opacity-20 scale-110 animate-pulse-glow"></div>
               <div className="relative bg-background p-2 rounded-full shadow-large hover:shadow-xl transition-all duration-500">
                 <img
-                  src="/lovable-uploads/4317ba30-7eb2-4fc4-952c-4efc6290d943.png"
+                  src="/lovable-uploads/uploaded-picture.png"
                   alt="Md Ashaduzzaman - Full-Stack WordPress Developer"
                   className="w-80 h-80 object-cover rounded-full transform hover:scale-105 transition-all duration-500"
                 />

@@ -2,10 +2,10 @@ import { Code, Users, Globe, Award } from "lucide-react";
 
 const About = () => {
   const stats = [
-    { icon: Code, value: "8+", label: "Years Experience" },
+    { icon: Code, value: "10+", label: "Years Experience" },
     { icon: Users, value: "150+", label: "Happy Clients" },
-    { icon: Globe, value: "4+", label: "Years Global Work" },
-    { icon: Award, value: "200+", label: "Projects Completed" },
+    { icon: Globe, value: "4+", label: "Years Experience Global Team" },
+    { icon: Award, value: "170+", label: "Projects Completed" },
   ];
 
   return (
@@ -24,7 +24,7 @@ const About = () => {
             </h3>
             <div className="space-y-4 text-muted-foreground leading-relaxed">
               <p>
-                With over 8 years of comprehensive experience in web development, I specialize in creating 
+                With over 10 years of comprehensive experience in web development, I specialize in creating 
                 robust, scalable WordPress solutions that drive business growth. My expertise spans from 
                 custom theme development to complex e-commerce implementations.
               </p>

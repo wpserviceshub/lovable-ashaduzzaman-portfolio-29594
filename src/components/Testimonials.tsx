@@ -7,48 +7,48 @@ const Testimonials = () => {
   const testimonials = [
     {
       id: 1,
-      name: "Sarah Johnson",
-      role: "CEO, TechStart Inc.",
-      company: "TechStart Inc.",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face",
+      name: "Maurice T.",
+      role: "Owner",
+      company: "Freelancer",
+      image: "/lovable-uploads/testimonial-thumb.svg?w=150&h=150&fit=crop&crop=face",
       rating: 5,
-      content: "Ashaduzzaman delivered exceptional WordPress development services. His attention to detail and technical expertise helped us launch our platform ahead of schedule. Highly recommended!"
+      content: "Ashaduzzaman did a good job with the a woocomerce project. He was quick to reply to communications and for my convenience worked the same hours as me. I will hire again."
     },
     {
       id: 2,
-      name: "Michael Chen",
-      role: "Founder, E-Shop Solutions",
-      company: "E-Shop Solutions",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
+      name: "Jason R.",
+      role: "Owner",
+      company: "Freelancer",
+      image: "/lovable-uploads/testimonial-thumb.svg?w=150&h=150&fit=crop&crop=face",
       rating: 5,
-      content: "Working with Ashaduzzaman was a game-changer for our e-commerce business. His WooCommerce expertise and custom solutions increased our conversion rate by 40%."
+      content: "Absolutely perfect job from start to finish. very happy with his communication and his professionalism."
     },
     {
       id: 3,
-      name: "Emily Rodriguez",
-      role: "Marketing Director, Creative Agency",
-      company: "Creative Agency",
-      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
+      name: "Gregor H.",
+      role: "Owner",
+      company: "Freelancer",
+      image: "/lovable-uploads/testimonial-thumb.svg?w=150&h=150&fit=crop&crop=face",
       rating: 5,
-      content: "The level of professionalism and quality of work is outstanding. Ashaduzzaman not only built our website but also provided valuable insights that improved our overall digital strategy."
+      content: "Ashaduzzaman did a great job!! I needed a custom plugin for Wordpress and he wrote a plugin and modified it until I was 100% happy. Will use him again in the future. Thanks my friend!"
     },
     {
       id: 4,
-      name: "David Thompson",
-      role: "Project Manager, Global Corp",
-      company: "Global Corp",
-      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
+      name: "James A.",
+      role: "Owner",
+      company: "Freelancer",
+      image: "/lovable-uploads/testimonial-thumb.svg?w=150&h=150&fit=crop&crop=face",
       rating: 5,
-      content: "Ashaduzzaman's expertise in WordPress development is unmatched. He delivered a complex multi-site solution that perfectly met our international business requirements."
+      content: "Ashaduzzaman I really liked the good work done and he delivered on time. I will highly recommend him to anyone and will certainly be using him again."
     },
     {
       id: 5,
-      name: "Lisa Park",
-      role: "Operations Manager, StartUp Hub",
-      company: "StartUp Hub",
-      image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop&crop=face",
+      name: "Evan H.",
+      role: "Founder, Pexl Design",
+      company: "Upwork",
+      image: "/lovable-uploads/testimonial-thumb.svg?w=150&h=150&fit=crop&crop=face",
       rating: 5,
-      content: "Exceptional communication, timely delivery, and superior code quality. Ashaduzzaman is our go-to developer for all WordPress projects. A true professional!"
+      content: "Ashaduzzaman did an excellent job on the WordPress customization project I needed help with, which was outside my area of expertise. He was able to jump into an existing build, clean up the errors I had made, quickly understand the structure, and implement the changes I needed with a high level of precision. What stood out most was his ability to troubleshoot issues efficiently and come back with thoughtful, reliable solutions. He was responsive, easy to communicate with, very fluent in English, and went above and beyond what I originally needed help with. I would absolutely recommend him to anyone looking for a dependable WordPress developer. I’ll definitely be back for more help, both with WordPress customization and other programming tasks."
     }
   ];
 

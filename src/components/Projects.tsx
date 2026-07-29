@@ -1,68 +1,9 @@
-import { ExternalLink, Github, Eye } from "lucide-react";
+import { ExternalLink, Github, Eye, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import projects from "../data/projects";
+import { slugify } from "../lib/slug";
 
 const Projects = () => {
-  const projects = [
-    {
-      id: 1,
-      title: "E-Commerce Platform",
-      description: "A comprehensive WooCommerce solution with custom payment gateway integration and advanced inventory management.",
-      image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=500&h=300&fit=crop",
-      technologies: ["WordPress", "WooCommerce", "PHP", "JavaScript"],
-      liveUrl: "#",
-      githubUrl: "#",
-      category: "E-Commerce"
-    },
-    {
-      id: 2,
-      title: "Corporate Website",
-      description: "Modern responsive corporate website with custom WordPress theme, advanced SEO optimization, and multilingual support.",
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&h=300&fit=crop",
-      technologies: ["WordPress", "Bootstrap", "GSAP", "PHP"],
-      liveUrl: "#",
-      githubUrl: "#",
-      category: "Corporate"
-    },
-    {
-      id: 3,
-      title: "Portfolio CMS",
-      description: "Custom portfolio content management system with drag-and-drop functionality and real-time preview capabilities.",
-      image: "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=500&h=300&fit=crop",
-      technologies: ["WordPress", "jQuery", "CSS3", "PHP"],
-      liveUrl: "#",
-      githubUrl: "#",
-      category: "CMS"
-    },
-    {
-      id: 4,
-      title: "Learning Management System",
-      description: "Comprehensive LMS with course management, progress tracking, and integrated payment processing for online education.",
-      image: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=500&h=300&fit=crop",
-      technologies: ["WordPress", "WooCommerce", "JavaScript", "Bootstrap"],
-      liveUrl: "#",
-      githubUrl: "#",
-      category: "Education"
-    },
-    {
-      id: 5,
-      title: "Restaurant Management",
-      description: "Complete restaurant management solution with online ordering, reservation system, and inventory tracking.",
-      image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=500&h=300&fit=crop",
-      technologies: ["WordPress", "WooCommerce", "jQuery", "GSAP"],
-      liveUrl: "#",
-      githubUrl: "#",
-      category: "Business"
-    },
-    {
-      id: 6,
-      title: "Booking Platform",
-      description: "Advanced booking platform with calendar integration, automated notifications, and payment processing.",
-      image: "https://images.unsplash.com/photo-1551434678-e076c223a692?w=500&h=300&fit=crop",
-      technologies: ["WordPress", "PHP", "JavaScript", "Bootstrap"],
-      liveUrl: "#",
-      githubUrl: "#",
-      category: "Platform"
-    }
-  ];
 
   return (
     <section id="projects" className="py-20 bg-secondary/30">
@@ -91,15 +32,29 @@ const Projects = () => {
                 />
                 <div className="absolute inset-0 bg-primary/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                   <div className="flex space-x-4">
-                    <button className="p-2 bg-background rounded-full shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110">
+                    <Link
+                      to={`/projects/${slugify(project.title)}`}
+                      className="p-2 bg-background rounded-full shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110"
+                      aria-label={`View details for ${project.title}`}
+                    >
                       <Eye className="w-5 h-5 text-primary" />
-                    </button>
-                    <button className="p-2 bg-background rounded-full shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110">
+                    </Link>
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="p-2 bg-background rounded-full shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110"
+                    >
                       <ExternalLink className="w-5 h-5 text-primary" />
-                    </button>
-                    <button className="p-2 bg-background rounded-full shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110">
+                    </a>
+                    <a
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="p-2 bg-background rounded-full shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110"
+                    >
                       <Github className="w-5 h-5 text-primary" />
-                    </button>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -133,18 +88,35 @@ const Projects = () => {
 
                 {/* Action Buttons */}
                 <div className="flex space-x-3">
-                  <button className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary-dark transition-colors">
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+                  >
                     <ExternalLink size={16} />
                     Live Demo
-                  </button>
-                  <button className="flex items-center justify-center gap-2 px-4 py-2 border border-border rounded-lg hover:bg-accent transition-colors">
+                  </a>
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center justify-center gap-2 px-4 py-2 border border-border rounded-lg hover:bg-accent transition-colors"
+                  >
                     <Github size={16} />
                     Code
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="mt-12 text-center">
+          <Link to="/projects" className="btn-primary group">
+            <span>All Projects</span>
+            <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+          </Link>
         </div>
       </div>
     </section>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Mail, Phone, MapPin, Send, Github, Linkedin, Twitter, Globe } from "lucide-react";
+import { Mail, Phone, MapPin, Send, Github, Linkedin, Twitter, Instagram, Facebook } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const Contact = () => {
@@ -31,47 +31,53 @@ const Contact = () => {
     {
       icon: Mail,
       label: "Email",
-      value: "ashaduzzaman@example.com",
-      href: "mailto:ashaduzzaman@example.com"
+      value: "mukul.ashad@gmail.com",
+      href: "mailto:mukul.ashad@gmail.com"
     },
     {
       icon: Phone, 
       label: "Phone",
-      value: "+880 123 456 7890",
-      href: "tel:+8801234567890"
+      value: "+880 1724 639919",
+      href: "tel:+8801724639919"
     },
     {
       icon: MapPin,
       label: "Location",
-      value: "Dhaka, Bangladesh",
+      value: "Bogura, Bangladesh",
       href: "#"
     }
   ];
 
   const socialLinks = [
     {
-      icon: Github,
-      label: "GitHub",
-      href: "https://github.com",
-      color: "hover:text-gray-900"
-    },
-    {
-      icon: Linkedin,
-      label: "LinkedIn",
-      href: "https://linkedin.com",
+      icon: Facebook,
+      label: "Facebook",
+      href: "https://facebook.com/",
       color: "hover:text-blue-600"
     },
     {
       icon: Twitter,
       label: "Twitter",
-      href: "https://twitter.com",
-      color: "hover:text-blue-400"
+      href: "https://twitter.com/",
+      color: "hover:text-sky-500"
     },
     {
-      icon: Globe,
-      label: "Website",
-      href: "https://example.com",
-      color: "hover:text-primary"
+      icon: Instagram,
+      label: "Instagram",
+      href: "https://instagram.com/",
+      color: "hover:text-pink-500"
+    },
+    {
+      icon: Linkedin,
+      label: "LinkedIn",
+      href: "https://www.linkedin.com/",
+      color: "hover:text-blue-700"
+    },
+    {
+      icon: Github,
+      label: "GitHub",
+      href: "https://github.com/",
+      color: "hover:text-gray-900"
     }
   ];
 
@@ -101,7 +107,7 @@ const Contact = () => {
               </p>
               
               <p className="text-muted-foreground leading-relaxed">
-                With 8+ years of experience in WordPress development and a track record of 
+                With 10+ years of experience in WordPress development and a track record of 
                 successful international collaborations, I'm confident we can create something amazing together.
               </p>
             </div>

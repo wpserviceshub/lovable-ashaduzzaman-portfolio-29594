@@ -1,0 +1,112 @@
+import { useParams } from "react-router-dom";
+import { ExternalLink, Github } from "lucide-react";
+import Navigation from "../components/Navigation";
+import Footer from "../components/Footer";
+import { getProjectBySlug } from "../data/projects";
+
+const ProjectDetails = () => {
+  const { projectSlug } = useParams();
+  const project = getProjectBySlug(projectSlug);
+
+  if (!project) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navigation />
+        <div className="px-4 py-24 text-center sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl rounded-2xl border border-border bg-card p-10 shadow-sm">
+            <h1 className="mb-3 text-3xl font-semibold text-foreground">Project not found</h1>
+            <p className="mb-6 text-muted-foreground">
+              The project you are looking for does not exist or may have been removed.
+            </p>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-background">
+      <Navigation />
+      <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 py-24 sm:px-6 lg:px-8">
+        <div className="relative overflow-hidden rounded-[2rem] border border-border/70 bg-card p-2 shadow-[0_30px_80px_-25px_rgba(15,23,42,0.25)]">
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-accent/20" />
+          <img
+            src={project.image}
+            alt={project.title}
+            className="relative h-[320px] w-full rounded-[1.5rem] object-cover sm:h-[440px]"
+          />
+          <div className="absolute inset-x-6 bottom-6 rounded-2xl border border-white/30 bg-background/70 px-5 py-4 backdrop-blur-md sm:inset-x-10 sm:bottom-10">
+            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary">Featured Project</p>
+            <h2 className="mt-1 text-xl font-semibold text-foreground">{project.title}</h2>
+          </div>
+        </div>
+
+        <div className="grid gap-8 lg:grid-cols-[1.3fr_0.7fr]">
+          <div className="space-y-6">
+            <div>
+              <p className="mb-3 text-sm font-semibold uppercase tracking-[0.3em] text-primary">{project.category}</p>
+              <h1 className="text-3xl font-semibold text-foreground sm:text-4xl">{project.title}</h1>
+            </div>
+
+            <p className="text-lg leading-8 text-muted-foreground">{project.details}</p>
+
+            <div>
+              <h2 className="mb-3 text-xl font-semibold text-foreground">Highlights</h2>
+              <ul className="space-y-3 text-muted-foreground">
+                {project.highlights.map((highlight) => (
+                  <li key={highlight} className="flex gap-3">
+                    <span className="mt-2 h-2.5 w-2.5 rounded-full bg-primary" />
+                    <span>{highlight}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="rounded-2xl border border-border bg-secondary/30 p-6">
+              <h2 className="mb-2 text-xl font-semibold text-foreground">Project outcome</h2>
+              <p className="leading-7 text-muted-foreground">{project.outcome}</p>
+            </div>
+          </div>
+
+          <div className="space-y-6 rounded-3xl border border-border bg-card p-6 shadow-sm">
+            <div>
+              <h2 className="mb-3 text-xl font-semibold text-foreground">Technologies</h2>
+              <div className="flex flex-wrap gap-2">
+                {project.technologies.map((tech) => (
+                  <span key={tech} className="rounded-full bg-primary/10 px-3 py-1 text-sm text-primary">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+              >
+                <ExternalLink size={16} />
+                Visit live site
+              </a>
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-lg border border-border px-4 py-3 text-sm font-medium text-foreground transition-colors hover:bg-accent"
+              >
+                <Github size={16} />
+                View code
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <Footer />
+    </div>
+  );
+};
+
+export default ProjectDetails;
