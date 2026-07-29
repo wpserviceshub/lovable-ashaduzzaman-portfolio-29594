@@ -141,7 +141,7 @@ const Hero = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-primary to-hero-gradient-to rounded-full blur-2xl opacity-20 scale-110 animate-pulse-glow"></div>
               <div className="relative bg-background p-2 rounded-full shadow-large hover:shadow-xl transition-all duration-500">
                 <img
-                  src="/lovable-uploads/uploaded-picture.png"
+                  src="/lovable-uploads/profile-image-new.png"
                   alt="Md Ashaduzzaman - Full-Stack WordPress Developer"
                   className="w-80 h-80 object-cover rounded-full transform hover:scale-105 transition-all duration-500"
                 />
