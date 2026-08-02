@@ -13,7 +13,7 @@ const fallbackProjects: CmsProject[] = [
     details: "This project used a component-driven approach to keep the experience fast, flexible, and easy to maintain.",
     featuredImage: "/portfolio/kcg.png",
     image: "/portfolio/kcg.png",
-    category: "Landing Page",
+    category: "Technology",
     liveUrl: "https://example.com/kcg",
     githubUrl: "https://github.com/example/kcg",
     technologies: ["Vite", "React", "Tailwind"],
