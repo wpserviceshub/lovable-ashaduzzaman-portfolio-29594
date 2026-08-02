@@ -101,7 +101,7 @@ const ProjectArchive = () => {
                     </span>
                   </div>
 
-                  <p className="mb-4 leading-relaxed text-muted-foreground">{project.description}</p>
+                  <p className="mb-4 leading-relaxed text-muted-foreground">{project.details}</p>
 
                   <div className="mb-4 flex flex-wrap gap-2">
                     {project.technologies.slice(0, 4).map((tech) => (
