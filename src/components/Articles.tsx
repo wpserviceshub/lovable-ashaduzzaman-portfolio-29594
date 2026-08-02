@@ -1,9 +1,31 @@
 import { Calendar, Clock, ArrowRight, Tag } from "lucide-react";
 import { Link } from "react-router-dom";
-import articles from "../data/articles";
-import { slugify } from "../lib/slug";
+import { usePosts } from "../hooks/use-cms";
 
 const Articles = () => {
+  const { data: posts, isLoading, isError, error } = usePosts();
+
+  if (isLoading) {
+    return (
+      <section id="articles" className="py-20 bg-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
+          <p className="text-lg font-medium text-foreground">Loading latest articles…</p>
+        </div>
+      </section>
+    );
+  }
+
+  if (isError) {
+    return (
+      <section id="articles" className="py-20 bg-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
+          <p className="text-lg font-medium text-destructive">Unable to load articles.</p>
+          <p className="mt-2 text-muted-foreground">{error instanceof Error ? error.message : "Please try again later."}</p>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section id="articles" className="py-20 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -16,8 +38,8 @@ const Articles = () => {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {articles.map((article, index) => {
-            const articleSlug = slugify(article.title);
+          {posts?.map((article, index) => {
+            const articleSlug = article.slug;
 
             return (
               <article

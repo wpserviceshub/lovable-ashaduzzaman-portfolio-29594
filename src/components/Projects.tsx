@@ -1,9 +1,30 @@
 import { ExternalLink, Github, Eye, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import projects from "../data/projects";
-import { slugify } from "../lib/slug";
+import { useProjects } from "../hooks/use-cms";
 
 const Projects = () => {
+  const { data: projects, isLoading, isError, error } = useProjects();
+
+  if (isLoading) {
+    return (
+      <section id="projects" className="py-20 bg-secondary/30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
+          <p className="text-lg font-medium text-foreground">Loading featured projects…</p>
+        </div>
+      </section>
+    );
+  }
+
+  if (isError) {
+    return (
+      <section id="projects" className="py-20 bg-secondary/30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
+          <p className="text-lg font-medium text-destructive">Unable to load projects.</p>
+          <p className="mt-2 text-muted-foreground">{error instanceof Error ? error.message : "Please try again later."}</p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="projects" className="py-20 bg-secondary/30">
@@ -17,7 +38,7 @@ const Projects = () => {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
+          {projects?.map((project, index) => (
             <div
               key={project.id}
               className="project-card animate-fade-in-up group"
@@ -33,7 +54,7 @@ const Projects = () => {
                 <div className="absolute inset-0 bg-primary/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                   <div className="flex space-x-4">
                     <Link
-                      to={`/projects/${slugify(project.title)}`}
+                      to={`/projects/${project.slug}`}
                       className="p-2 bg-background rounded-full shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110"
                       aria-label={`View details for ${project.title}`}
                     >

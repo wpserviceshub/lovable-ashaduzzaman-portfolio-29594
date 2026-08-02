@@ -2,10 +2,36 @@ import { Link } from "react-router-dom";
 import { ArrowRight, ExternalLink, Github, Eye } from "lucide-react";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
-import projects from "../data/projects";
-import { slugify } from "../lib/slug";
+import { useProjects } from "../hooks/use-cms";
 
 const ProjectArchive = () => {
+  const { data: projects, isLoading, isError, error } = useProjects();
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navigation />
+        <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 text-center">
+          <p className="text-lg font-medium text-foreground">Loading projects…</p>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navigation />
+        <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 text-center">
+          <p className="text-lg font-medium text-destructive">Unable to load projects.</p>
+          <p className="mt-2 text-muted-foreground">{error instanceof Error ? error.message : "Please try again later."}</p>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -19,8 +45,8 @@ const ProjectArchive = () => {
         </div>
 
         <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-          {projects.map((project, index) => {
-            const projectSlug = slugify(project.title);
+          {projects?.map((project, index) => {
+            const projectSlug = project.slug;
 
             return (
               <div

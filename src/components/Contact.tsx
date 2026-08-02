@@ -52,31 +52,31 @@ const Contact = () => {
     {
       icon: Facebook,
       label: "Facebook",
-      href: "https://facebook.com/",
+      href: "https://www.facebook.com/mukul.ashad",
       color: "hover:text-blue-600"
     },
     {
       icon: Twitter,
       label: "Twitter",
-      href: "https://twitter.com/",
+      href: "https://x.com/mukul531410",
       color: "hover:text-sky-500"
     },
     {
       icon: Instagram,
       label: "Instagram",
-      href: "https://instagram.com/",
+      href: "https://www.instagram.com/mukul531410/",
       color: "hover:text-pink-500"
     },
     {
       icon: Linkedin,
       label: "LinkedIn",
-      href: "https://www.linkedin.com/",
+      href: "https://www.linkedin.com/in/md-ashaduzzaman-978727410/",
       color: "hover:text-blue-700"
     },
     {
       icon: Github,
       label: "GitHub",
-      href: "https://github.com/",
+      href: "https://github.com/mukul531410",
       color: "hover:text-gray-900"
     }
   ];

@@ -2,11 +2,36 @@ import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, Calendar, Clock, Tag } from "lucide-react";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
-import { getArticleBySlug } from "../data/articles";
+import { usePost } from "../hooks/use-cms";
 
 const ArticleDetails = () => {
   const { slug } = useParams();
-  const article = getArticleBySlug(slug);
+  const { data: article, isLoading, isError, error } = usePost(slug);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navigation />
+        <div className="mx-auto max-w-3xl px-4 py-24 text-center sm:px-6 lg:px-8">
+          <p className="text-lg font-medium text-foreground">Loading article…</p>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navigation />
+        <div className="mx-auto max-w-3xl px-4 py-24 text-center sm:px-6 lg:px-8">
+          <p className="text-lg font-medium text-destructive">Unable to load article.</p>
+          <p className="mt-2 text-muted-foreground">{error instanceof Error ? error.message : "Please try again later."}</p>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   if (!article) {
     return (
@@ -61,7 +86,10 @@ const ArticleDetails = () => {
         </div>
 
         <div className="rounded-3xl border border-border bg-card p-8 shadow-sm">
-          <p className="text-lg leading-8 text-muted-foreground">{article.content}</p>
+          <div
+            className="prose prose-invert text-muted-foreground"
+            dangerouslySetInnerHTML={{ __html: article.content }}
+          />
 
           <div className="mt-8 rounded-2xl border border-border bg-secondary/30 p-6">
             <h2 className="mb-3 text-xl font-semibold text-foreground">Highlights</h2>

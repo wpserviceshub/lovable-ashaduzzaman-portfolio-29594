@@ -2,10 +2,36 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Calendar, Clock, Tag } from "lucide-react";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
-import articles from "../data/articles";
-import { slugify } from "../lib/slug";
+import { usePosts } from "../hooks/use-cms";
 
 const ArticleArchive = () => {
+  const { data: posts, isLoading, isError, error } = usePosts();
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navigation />
+        <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 text-center">
+          <p className="text-lg font-medium text-foreground">Loading articles…</p>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navigation />
+        <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 text-center">
+          <p className="text-lg font-medium text-destructive">Unable to load articles.</p>
+          <p className="mt-2 text-muted-foreground">{error instanceof Error ? error.message : "Please try again later."}</p>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -19,16 +45,16 @@ const ArticleArchive = () => {
         </div>
 
         <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-          {articles.map((article) => (
+          {posts?.map((article) => (
             <article key={article.id} className="overflow-hidden rounded-2xl border border-border bg-card shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-large">
-              <Link to={`/articles/${slugify(article.title)}`} className="block">
+              <Link to={`/articles/${article.slug}`} className="block">
                 <img src={article.image} alt={article.title} className="h-48 w-full object-cover" />
               </Link>
               <div className="p-6">
                 <div className="mb-3 flex items-center gap-2 text-sm text-primary">
                   <span className="rounded-full bg-primary/10 px-3 py-1">{article.category}</span>
                 </div>
-                <Link to={`/articles/${slugify(article.title)}`} className="group">
+                <Link to={`/articles/${article.slug}`} className="group">
                   <h2 className="mb-3 text-xl font-semibold text-foreground transition-colors group-hover:text-primary">
                     {article.title}
                   </h2>
@@ -45,7 +71,7 @@ const ArticleArchive = () => {
                     </span>
                   ))}
                 </div>
-                <Link to={`/articles/${slugify(article.title)}`} className="inline-flex items-center gap-2 font-medium text-primary">
+                <Link to={`/articles/${article.slug}`} className="inline-flex items-center gap-2 font-medium text-primary">
                   Read More <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               </div>

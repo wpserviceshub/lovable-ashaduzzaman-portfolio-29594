@@ -2,11 +2,36 @@ import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, ExternalLink, Github } from "lucide-react";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
-import { getProjectBySlug } from "../data/projects";
+import { useProject } from "../hooks/use-cms";
 
 const ProjectDetails = () => {
   const { projectSlug } = useParams();
-  const project = getProjectBySlug(projectSlug);
+  const { data: project, isLoading, isError, error } = useProject(projectSlug);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navigation />
+        <div className="px-4 py-24 text-center sm:px-6 lg:px-8">
+          <p className="text-lg font-medium text-foreground">Loading project details…</p>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navigation />
+        <div className="px-4 py-24 text-center sm:px-6 lg:px-8">
+          <p className="text-lg font-medium text-destructive">Unable to load project.</p>
+          <p className="mt-2 text-muted-foreground">{error instanceof Error ? error.message : "Please try again later."}</p>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   if (!project) {
     return (
