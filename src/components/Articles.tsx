@@ -38,7 +38,7 @@ const Articles = () => {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {posts?.map((article, index) => {
+          {posts?.slice(0, 3).map((article, index) => {
             const articleSlug = article.slug;
 
             return (
@@ -52,7 +52,7 @@ const Articles = () => {
                     <img
                       src={article.image}
                       alt={article.title}
-                      className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
+                      className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-110"
                     />
                   </Link>
                   <div className="absolute top-4 left-4">
