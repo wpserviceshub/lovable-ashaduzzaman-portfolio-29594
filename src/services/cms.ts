@@ -313,6 +313,21 @@ export interface CmsPost {
   highlights: string[];
 }
 
+export interface HomePageSettings {
+  projects_section_title: string;
+  projects_content: string;
+  projects_archive_button_text: string;
+  testimonials_section_title: string;
+  testimonials_content: string;
+  articles_section_title: string;
+  articles_content: string;
+  articles_archive_button_text: string;
+  contact_section_title: string;
+  contact_section_description: string;
+  contact_info_title: string;
+  contact_info_description: string;
+}
+
 function normalizeProject(item: any): CmsProject {
   const builtWith = item.acf?.built_with ?? "";
   const featuredImage = getFeaturedImage(item);
@@ -409,4 +424,15 @@ export async function getPostBySlug(slug: string): Promise<CmsPost | null> {
   }
 
   return fallbackArticles.find((article) => article.slug === slug) ?? null;
+}
+
+export async function getHomePageSettings(): Promise<HomePageSettings> {
+  return fetchApi<HomePageSettings>("/ashp/v1/home");
+}
+
+export async function submitContactForm(data: { name: string; email: string; message: string; honeypot?: string }): Promise<{ success: boolean; message?: string; contact_id?: number; mail_warning?: boolean }> {
+  return fetchApi<{ success: boolean; message?: string; contact_id?: number; mail_warning?: boolean }>("/ashp/v1/contact", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
 }
