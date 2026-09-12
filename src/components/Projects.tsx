@@ -99,7 +99,7 @@ const Projects = () => {
                 </div>
                 
                 <p className="text-muted-foreground mb-4 leading-relaxed">
-                  {project.details}
+                  {project.description}
                 </p>
 
                 {/* Technologies */}

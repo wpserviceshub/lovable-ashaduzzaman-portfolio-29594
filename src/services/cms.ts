@@ -350,13 +350,15 @@ export interface GlobalWebsiteSettings {
 function normalizeProject(item: any): CmsProject {
   const builtWith = item.acf?.built_with ?? "";
   const featuredImage = getFeaturedImage(item);
+  const rawDescription = item.acf?.project_description ?? stripTags(item.excerpt?.rendered ?? "");
+  const rawOutcome = item.acf?.project_outcome ?? stripTags(item.excerpt?.rendered ?? "");
 
   return {
     id: item.id,
     slug: item.slug,
     title: decodeHtmlEntities(item.title?.rendered ?? ""),
-    description: stripTags(item.excerpt?.rendered ?? ""),
-    details: stripTags(item.content?.rendered ?? ""),
+    description: decodeHtmlEntities(rawDescription),
+    details: decodeHtmlEntities(stripTags(item.content?.rendered ?? "")),
     featuredImage,
     image: featuredImage,
     category: item.acf?.project_type ?? "Project",
@@ -364,7 +366,7 @@ function normalizeProject(item: any): CmsProject {
     githubUrl: item.acf?.github_link ?? "#",
     technologies: builtWith.split(",").map((tech: string) => tech.trim()).filter(Boolean),
     highlights: [],
-    outcome: stripTags(item.excerpt?.rendered ?? ""),
+    outcome: decodeHtmlEntities(rawOutcome),
   };
 }
 
