@@ -254,6 +254,12 @@ function stripTags(value: string): string {
   return value.replace(/<[^>]*>/g, "").trim();
 }
 
+function decodeHtmlEntities(value: string): string {
+  const textarea = document.createElement("textarea");
+  textarea.innerHTML = value;
+  return textarea.value;
+}
+
 function getFeaturedImage(item: any): string {
   return item?._embedded?.["wp:featuredmedia"]?.[0]?.source_url ?? "";
 }
@@ -348,7 +354,7 @@ function normalizeProject(item: any): CmsProject {
   return {
     id: item.id,
     slug: item.slug,
-    title: item.title?.rendered ?? "",
+    title: decodeHtmlEntities(item.title?.rendered ?? ""),
     description: stripTags(item.excerpt?.rendered ?? ""),
     details: stripTags(item.content?.rendered ?? ""),
     featuredImage,
@@ -371,7 +377,7 @@ function normalizePost(item: any): CmsPost {
   return {
     id: item.id,
     slug: item.slug,
-    title: item.title?.rendered ?? "",
+    title: decodeHtmlEntities(item.title?.rendered ?? ""),
     excerpt,
     content,
     featuredImage,
