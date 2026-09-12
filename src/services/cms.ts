@@ -358,7 +358,7 @@ function normalizeProject(item: any): CmsProject {
     slug: item.slug,
     title: decodeHtmlEntities(item.title?.rendered ?? ""),
     description: decodeHtmlEntities(rawDescription),
-    details: decodeHtmlEntities(stripTags(item.content?.rendered ?? "")),
+    details: item.content?.rendered ?? "",
     featuredImage,
     image: featuredImage,
     category: item.acf?.project_type ?? "Project",

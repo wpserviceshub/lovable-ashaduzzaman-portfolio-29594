@@ -89,24 +89,10 @@ const ProjectDetails = () => {
               <h1 className="text-3xl font-semibold text-foreground sm:text-4xl">{project.title}</h1>
             </div>
 
-            <p className="text-lg leading-8 text-muted-foreground">{project.details}</p>
-
-            <div>
-              <h2 className="mb-3 text-xl font-semibold text-foreground">Highlights</h2>
-              <ul className="space-y-3 text-muted-foreground">
-                {project.highlights.map((highlight) => (
-                  <li key={highlight} className="flex gap-3">
-                    <span className="mt-2 h-2.5 w-2.5 rounded-full bg-primary" />
-                    <span>{highlight}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="rounded-2xl border border-border bg-secondary/30 p-6">
-              <h2 className="mb-2 text-xl font-semibold text-foreground">Project outcome</h2>
-              <p className="leading-7 text-muted-foreground">{project.outcome}</p>
-            </div>
+            <div
+              className="prose prose-lg max-w-none text-muted-foreground prose-headings:text-foreground prose-strong:text-foreground prose-a:text-primary prose-a:underline prose-blockquote:text-muted-foreground"
+              dangerouslySetInnerHTML={{ __html: project.details }}
+            />
           </div>
 
           <div className="space-y-6 rounded-3xl border border-border bg-card p-6 shadow-sm">
