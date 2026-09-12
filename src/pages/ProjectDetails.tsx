@@ -90,7 +90,7 @@ const ProjectDetails = () => {
             </div>
 
             <div
-              className="prose prose-lg max-w-none text-muted-foreground prose-headings:text-foreground prose-strong:text-foreground prose-a:text-primary prose-a:underline prose-blockquote:text-muted-foreground"
+              className="prose prose-lg max-w-none text-muted-foreground prose-headings:text-foreground prose-strong:text-foreground prose-a:text-primary prose-a:underline hover:prose-a:text-primary-dark prose-blockquote:text-muted-foreground prose-li:my-1 prose-headings:mt-8 prose-headings:mb-3 prose-p:leading-relaxed"
               dangerouslySetInnerHTML={{ __html: project.details }}
             />
           </div>
