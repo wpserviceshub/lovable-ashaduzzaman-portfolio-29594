@@ -7,6 +7,7 @@ import { useProject } from "../hooks/use-cms";
 const ProjectDetails = () => {
   const { projectSlug } = useParams();
   const { data: project, isLoading, isError, error } = useProject(projectSlug);
+  const PLACEHOLDER_IMAGE = "/placeholder.svg";
 
   if (isLoading) {
     return (
@@ -65,9 +66,15 @@ const ProjectDetails = () => {
         <div className="relative overflow-hidden rounded-[2rem] border border-border/70 bg-card p-2 shadow-[0_30px_80px_-25px_rgba(15,23,42,0.25)]">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-accent/20" />
           <img
-            src={project.image}
+            src={project.image || PLACEHOLDER_IMAGE}
             alt={project.title}
             className="relative h-[320px] w-full rounded-[1.5rem] object-cover sm:h-[440px]"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              if (target.src !== PLACEHOLDER_IMAGE) {
+                target.src = PLACEHOLDER_IMAGE;
+              }
+            }}
           />
           <div className="absolute inset-x-6 bottom-6 rounded-2xl border border-white/30 bg-background/70 px-5 py-4 backdrop-blur-md sm:inset-x-10 sm:bottom-10">
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary">Featured Project</p>

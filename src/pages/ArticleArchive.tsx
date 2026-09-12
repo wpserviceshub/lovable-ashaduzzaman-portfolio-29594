@@ -6,6 +6,7 @@ import { usePosts } from "../hooks/use-cms";
 
 const ArticleArchive = () => {
   const { data: posts, isLoading, isError, error } = usePosts();
+  const PLACEHOLDER_IMAGE = "/placeholder.svg";
 
   if (isLoading) {
     return (
@@ -48,7 +49,17 @@ const ArticleArchive = () => {
           {posts?.map((article) => (
             <article key={article.id} className="overflow-hidden rounded-2xl border border-border bg-card shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-large">
               <Link to={`/articles/${article.slug}`} className="block">
-                <img src={article.image} alt={article.title} className="h-48 w-full object-cover" />
+                <img
+                  src={article.image || PLACEHOLDER_IMAGE}
+                  alt={article.title}
+                  className="h-48 w-full object-cover"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    if (target.src !== PLACEHOLDER_IMAGE) {
+                      target.src = PLACEHOLDER_IMAGE;
+                    }
+                  }}
+                />
               </Link>
               <div className="p-6">
                 <div className="mb-3 flex items-center gap-2 text-sm text-primary">

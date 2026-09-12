@@ -328,6 +328,19 @@ export interface HomePageSettings {
   contact_info_description: string;
 }
 
+export interface GlobalWebsiteSettings {
+  email: string;
+  phone: string;
+  address: string;
+  social: {
+    facebook?: string;
+    twitter?: string;
+    instagram?: string;
+    linkedin?: string;
+    github?: string;
+  };
+}
+
 function normalizeProject(item: any): CmsProject {
   const builtWith = item.acf?.built_with ?? "";
   const featuredImage = getFeaturedImage(item);
@@ -382,7 +395,7 @@ function getFallbackProjectBySlug(slug: string): CmsProject | null {
 
 export async function getProjects(): Promise<CmsProject[]> {
   try {
-    const projects = await fetchApi<any[]>("/wp/v2/projects?per_page=100&_embed&_fields=id,slug,title,content,excerpt,acf,_embedded");
+    const projects = await fetchApi<any[]>("/wp/v2/projects?per_page=100&_embed");
     return projects.map(normalizeProject);
   } catch (error) {
     console.warn("CMS projects unavailable, using fallback data", error);
@@ -392,7 +405,7 @@ export async function getProjects(): Promise<CmsProject[]> {
 
 export async function getProjectBySlug(slug: string): Promise<CmsProject | null> {
   try {
-    const projects = await fetchApi<any[]>(`/wp/v2/projects?slug=${encodeURIComponent(slug)}&_embed&_fields=id,slug,title,content,excerpt,acf,_embedded`);
+    const projects = await fetchApi<any[]>(`/wp/v2/projects?slug=${encodeURIComponent(slug)}&_embed`);
     if (projects.length) {
       return normalizeProject(projects[0]);
     }
@@ -405,7 +418,7 @@ export async function getProjectBySlug(slug: string): Promise<CmsProject | null>
 
 export async function getPosts(): Promise<CmsPost[]> {
   try {
-    const posts = await fetchApi<any[]>("/wp/v2/posts?per_page=20&_embed&_fields=id,slug,title,excerpt,content,_embedded,date");
+    const posts = await fetchApi<any[]>("/wp/v2/posts?per_page=20&_embed");
     return posts.map(normalizePost);
   } catch (error) {
     console.warn("CMS articles unavailable, using fallback article data", error);
@@ -415,7 +428,7 @@ export async function getPosts(): Promise<CmsPost[]> {
 
 export async function getPostBySlug(slug: string): Promise<CmsPost | null> {
   try {
-    const posts = await fetchApi<any[]>(`/wp/v2/posts?slug=${encodeURIComponent(slug)}&_embed&_fields=id,slug,title,excerpt,content,_embedded,date`);
+    const posts = await fetchApi<any[]>(`/wp/v2/posts?slug=${encodeURIComponent(slug)}&_embed`);
     if (posts.length) {
       return normalizePost(posts[0]);
     }
@@ -428,6 +441,10 @@ export async function getPostBySlug(slug: string): Promise<CmsPost | null> {
 
 export async function getHomePageSettings(): Promise<HomePageSettings> {
   return fetchApi<HomePageSettings>("/ashp/v1/home");
+}
+
+export async function getGlobalWebsiteSettings(): Promise<GlobalWebsiteSettings> {
+  return fetchApi<GlobalWebsiteSettings>("/ashp/v1/global");
 }
 
 export async function submitContactForm(data: { name: string; email: string; message: string; honeypot?: string }): Promise<{ success: boolean; message?: string; contact_id?: number; mail_warning?: boolean }> {

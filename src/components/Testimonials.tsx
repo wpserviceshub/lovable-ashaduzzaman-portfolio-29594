@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight, Star, Quote } from "lucide-react";
 
 const Testimonials = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const PLACEHOLDER_IMAGE = "/placeholder.svg";
 
   const testimonials = [
     {
@@ -102,6 +103,12 @@ const Testimonials = () => {
                   src={testimonials[currentIndex].image}
                   alt={testimonials[currentIndex].name}
                   className="w-16 h-16 rounded-full object-cover border-4 border-primary/20"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    if (target.src !== PLACEHOLDER_IMAGE) {
+                      target.src = PLACEHOLDER_IMAGE;
+                    }
+                  }}
                 />
                 <div className="text-left">
                   <h4 className="text-lg font-semibold text-foreground">
@@ -164,6 +171,12 @@ const Testimonials = () => {
                     src={testimonial.image}
                     alt={testimonial.name}
                     className="w-12 h-12 rounded-full object-cover"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      if (target.src !== PLACEHOLDER_IMAGE) {
+                        target.src = PLACEHOLDER_IMAGE;
+                      }
+                    }}
                   />
                   <div className="flex-1">
                     <div className="flex mb-2">

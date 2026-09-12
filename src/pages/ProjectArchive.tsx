@@ -6,6 +6,7 @@ import { useProjects } from "../hooks/use-cms";
 
 const ProjectArchive = () => {
   const { data: projects, isLoading, isError, error } = useProjects();
+  const PLACEHOLDER_IMAGE = "/placeholder.svg";
 
   if (isLoading) {
     return (
@@ -56,9 +57,15 @@ const ProjectArchive = () => {
               >
                 <div className="relative overflow-hidden">
                   <img
-                    src={project.image}
+                    src={project.image || PLACEHOLDER_IMAGE}
                     alt={project.title}
                     className="h-48 w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      if (target.src !== PLACEHOLDER_IMAGE) {
+                        target.src = PLACEHOLDER_IMAGE;
+                      }
+                    }}
                   />
                   <div className="absolute inset-0 flex items-center justify-center bg-primary/80 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                     <div className="flex space-x-4">

@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Mail, Phone, MapPin, Send, Github, Linkedin, Twitter, Instagram, Facebook } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
-import { getHomePageSettings, submitContactForm } from "@/services/cms";
+import { getHomePageSettings, submitContactForm, getGlobalWebsiteSettings, GlobalWebsiteSettings } from "@/services/cms";
 
 const fallbackContactContent = {
   sectionTitle: "Get In Touch",
@@ -11,18 +11,40 @@ const fallbackContactContent = {
   infoDescription: "<p>I'm always interested in hearing about new projects and opportunities. Whether you have a specific project in mind or just want to explore possibilities, feel free to reach out. I'd love to hear from you!</p><p>With 10+ years of experience in WordPress development and a track record of successful international collaborations, I'm confident we can create something amazing together.</p>",
 };
 
+type SocialEntry = {
+  key: keyof GlobalWebsiteSettings["social"];
+  icon: typeof Facebook;
+  label: string;
+  color: string;
+};
+
+const SOCIAL_ENTRIES: SocialEntry[] = [
+  { key: "facebook", icon: Facebook, label: "Facebook", color: "hover:text-blue-600" },
+  { key: "twitter", icon: Twitter, label: "Twitter", color: "hover:text-sky-500" },
+  { key: "instagram", icon: Instagram, label: "Instagram", color: "hover:text-pink-500" },
+  { key: "linkedin", icon: Linkedin, label: "LinkedIn", color: "hover:text-blue-700" },
+  { key: "github", icon: Github, label: "GitHub", color: "hover:text-gray-900" },
+];
+
 const Contact = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
-    email: "", 
+    email: "",
     message: ""
   });
+  const honeypotRef = useRef<HTMLInputElement>(null);
 
   const { data: homeSettings } = useQuery({
     queryKey: ["cms", "home-settings"],
     queryFn: getHomePageSettings,
+    staleTime: 1000 * 60 * 5,
+  });
+
+  const { data: globalSettings } = useQuery({
+    queryKey: ["cms", "global-settings"],
+    queryFn: getGlobalWebsiteSettings,
     staleTime: 1000 * 60 * 5,
   });
 
@@ -32,6 +54,40 @@ const Contact = () => {
     infoTitle: homeSettings?.contact_info_title || fallbackContactContent.infoTitle,
     infoDescription: homeSettings?.contact_info_description || fallbackContactContent.infoDescription,
   };
+
+  const email = globalSettings?.email ?? "";
+  const phone = globalSettings?.phone ?? "";
+  const address = globalSettings?.address ?? "";
+
+  const contactInfo = [
+    {
+      icon: Mail,
+      label: "Email",
+      value: email,
+      href: email ? `mailto:${email}` : "#",
+    },
+    {
+      icon: Phone,
+      label: "Phone",
+      value: phone,
+      href: phone ? `tel:${phone.replace(/[^\d+]/g, "")}` : "#",
+    },
+    {
+      icon: MapPin,
+      label: "Location",
+      value: address,
+      href: address ? "#" : undefined,
+    },
+  ].filter((info) => info.value !== "");
+
+  const socialLinks = SOCIAL_ENTRIES.filter(
+    (entry) => globalSettings?.social?.[entry.key]
+  ).map((entry) => ({
+    icon: entry.icon,
+    label: entry.label,
+    href: globalSettings!.social[entry.key]!,
+    color: entry.color,
+  }));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,13 +99,16 @@ const Contact = () => {
     try {
       await submitContactForm({
         ...formData,
-        honeypot: ""
+        honeypot: honeypotRef.current?.value ?? "",
       });
       toast({
         title: "Message Sent!",
         description: "Thank you for your message. I'll get back to you soon.",
       });
       setFormData({ name: "", email: "", message: "" });
+      if (honeypotRef.current) {
+        honeypotRef.current.value = "";
+      }
     } catch (error) {
       toast({
         title: "Message could not be sent",
@@ -67,60 +126,6 @@ const Contact = () => {
       [e.target.name]: e.target.value
     });
   };
-
-  const contactInfo = [
-    {
-      icon: Mail,
-      label: "Email",
-      value: "mukul.ashad@gmail.com",
-      href: "mailto:mukul.ashad@gmail.com"
-    },
-    {
-      icon: Phone, 
-      label: "Phone",
-      value: "+880 1724 639919",
-      href: "tel:+8801724639919"
-    },
-    {
-      icon: MapPin,
-      label: "Location",
-      value: "Bogura, Bangladesh",
-      href: "#"
-    }
-  ];
-
-  const socialLinks = [
-    {
-      icon: Facebook,
-      label: "Facebook",
-      href: "https://www.facebook.com/mukul.ashad",
-      color: "hover:text-blue-600"
-    },
-    {
-      icon: Twitter,
-      label: "Twitter",
-      href: "https://x.com/mukul531410",
-      color: "hover:text-sky-500"
-    },
-    {
-      icon: Instagram,
-      label: "Instagram",
-      href: "https://www.instagram.com/mukul531410/",
-      color: "hover:text-pink-500"
-    },
-    {
-      icon: Linkedin,
-      label: "LinkedIn",
-      href: "https://www.linkedin.com/in/md-ashaduzzaman-978727410/",
-      color: "hover:text-blue-700"
-    },
-    {
-      icon: Github,
-      label: "GitHub",
-      href: "https://github.com/mukul531410",
-      color: "hover:text-gray-900"
-    }
-  ];
 
   return (
     <section id="contact" className="py-20 bg-secondary/30">
@@ -148,55 +153,60 @@ const Contact = () => {
             </div>
 
             {/* Contact Info */}
-            <div className="space-y-4 mb-8">
-              {contactInfo.map((info, index) => {
-                const IconComponent = info.icon;
-                return (
-                  <div key={index} className="flex items-center space-x-4">
-                    <div className="flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg">
-                      <IconComponent className="w-6 h-6 text-primary" />
-                    </div>
-                    <div>
-                      <p className="text-sm text-muted-foreground">{info.label}</p>
-                      <a
-                        href={info.href}
-                        className="text-foreground hover:text-primary transition-colors font-medium"
-                      >
-                        {info.value}
-                      </a>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Social Links */}
-            <div className="space-y-4">
-              <h4 className="text-lg font-semibold text-foreground">Follow Me</h4>
-              <div className="flex space-x-4">
-                {socialLinks.map((social, index) => {
-                  const IconComponent = social.icon;
+            {contactInfo.length > 0 && (
+              <div className="space-y-4 mb-8">
+                {contactInfo.map((info, index) => {
+                  const IconComponent = info.icon;
                   return (
-                    <a
-                      key={index}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`flex items-center justify-center w-12 h-12 bg-background border border-border rounded-lg hover:shadow-medium transition-all duration-200 hover:-translate-y-1 ${social.color}`}
-                      aria-label={social.label}
-                    >
-                      <IconComponent className="w-5 h-5" />
-                    </a>
+                    <div key={index} className="flex items-center space-x-4">
+                      <div className="flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg">
+                        <IconComponent className="w-6 h-6 text-primary" />
+                      </div>
+                      <div>
+                        <p className="text-sm text-muted-foreground">{info.label}</p>
+                        <a
+                          href={info.href}
+                          className="text-foreground hover:text-primary transition-colors font-medium"
+                        >
+                          {info.value}
+                        </a>
+                      </div>
+                    </div>
                   );
                 })}
               </div>
-            </div>
+            )}
+
+            {/* Social Links */}
+            {socialLinks.length > 0 && (
+              <div className="space-y-4">
+                <h4 className="text-lg font-semibold text-foreground">Follow Me</h4>
+                <div className="flex space-x-4">
+                  {socialLinks.map((social, index) => {
+                    const IconComponent = social.icon;
+                    return (
+                      <a
+                        key={index}
+                        href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`flex items-center justify-center w-12 h-12 bg-background border border-border rounded-lg hover:shadow-medium transition-all duration-200 hover:-translate-y-1 ${social.color}`}
+                        aria-label={social.label}
+                      >
+                        <IconComponent className="w-5 h-5" />
+                      </a>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Contact Form */}
           <div className="animate-fade-in-right">
             <form onSubmit={handleSubmit} className="bg-background rounded-2xl shadow-large p-8 border border-border">
               <input
+                ref={honeypotRef}
                 type="text"
                 name="honeypot"
                 tabIndex={-1}

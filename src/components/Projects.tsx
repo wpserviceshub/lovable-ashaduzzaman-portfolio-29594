@@ -4,6 +4,7 @@ import { useProjects } from "../hooks/use-cms";
 
 const Projects = () => {
   const { data: projects, isLoading, isError, error } = useProjects();
+  const PLACEHOLDER_IMAGE = "/placeholder.svg";
 
   if (isLoading) {
     return (
@@ -36,7 +37,7 @@ const Projects = () => {
             Showcasing some of my recent work and successful project deliveries
           </p>
         </div>
-
+        
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {(projects ?? []).slice(0, 6).map((project, index) => (
             <div
@@ -47,9 +48,15 @@ const Projects = () => {
               {/* Project Image */}
               <div className="relative overflow-hidden">
                 <img
-                  src={project.image}
+                  src={project.image || PLACEHOLDER_IMAGE}
                   alt={project.title}
                   className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    if (target.src !== PLACEHOLDER_IMAGE) {
+                      target.src = PLACEHOLDER_IMAGE;
+                    }
+                  }}
                 />
                 <div className="absolute inset-0 bg-primary/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                   <div className="flex space-x-4">

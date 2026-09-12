@@ -4,6 +4,7 @@ import { usePosts } from "../hooks/use-cms";
 
 const Articles = () => {
   const { data: posts, isLoading, isError, error } = usePosts();
+  const PLACEHOLDER_IMAGE = "/placeholder.svg";
 
   if (isLoading) {
     return (
@@ -50,9 +51,15 @@ const Articles = () => {
                 <div className="relative overflow-hidden">
                   <Link to={`/articles/${articleSlug}`}>
                     <img
-                      src={article.image}
+                      src={article.image || PLACEHOLDER_IMAGE}
                       alt={article.title}
                       className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-110"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        if (target.src !== PLACEHOLDER_IMAGE) {
+                          target.src = PLACEHOLDER_IMAGE;
+                        }
+                      }}
                     />
                   </Link>
                   <div className="absolute top-4 left-4">

@@ -7,6 +7,7 @@ import { usePost } from "../hooks/use-cms";
 const ArticleDetails = () => {
   const { slug } = useParams();
   const { data: article, isLoading, isError, error } = usePost(slug);
+  const PLACEHOLDER_IMAGE = "/placeholder.svg";
 
   if (isLoading) {
     return (
@@ -62,7 +63,17 @@ const ArticleDetails = () => {
 
         <div className="relative overflow-hidden rounded-[2rem] border border-border/70 bg-card p-2 shadow-[0_30px_80px_-25px_rgba(15,23,42,0.25)]">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-accent/20" />
-          <img src={article.image} alt={article.title} className="relative h-[320px] w-full rounded-[1.5rem] object-cover sm:h-[440px]" />
+          <img
+            src={article.image || PLACEHOLDER_IMAGE}
+            alt={article.title}
+            className="relative h-[320px] w-full rounded-[1.5rem] object-cover sm:h-[440px]"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              if (target.src !== PLACEHOLDER_IMAGE) {
+                target.src = PLACEHOLDER_IMAGE;
+              }
+            }}
+          />
           <div className="absolute inset-x-6 bottom-6 rounded-2xl border border-white/30 bg-background/70 px-5 py-4 backdrop-blur-md sm:inset-x-10 sm:bottom-10">
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary">Featured Article</p>
             <h2 className="mt-1 text-xl font-semibold text-foreground">{article.title}</h2>
