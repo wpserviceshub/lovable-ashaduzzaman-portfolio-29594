@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import {
   Code2,
   Database,
@@ -18,6 +19,12 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { useSkills } from "../hooks/use-cms";
+import { getHomePageSettings, HomePageSettings } from "@/services/cms";
+
+interface SkillsHomePageSettings extends HomePageSettings {
+  skills_section_title?: string;
+  skills_section_description?: string;
+}
 
 const iconMap: Record<string, LucideIcon> = {
   wordpress: Code2,
@@ -49,16 +56,24 @@ const resolveIcon = (name: string): LucideIcon => {
 
 const Skills = () => {
   const { data: skills = [], isLoading, isError } = useSkills();
+  const { data: homeSettings } = useQuery<SkillsHomePageSettings | null>({
+    queryKey: ["cms", "home-settings"],
+    queryFn: getHomePageSettings,
+    staleTime: 1000 * 60 * 5,
+  });
+
+  const sectionTitle = homeSettings?.skills_section_title || "Technical Skills";
+  const sectionDescription = homeSettings?.skills_section_description || "Expertise built through years of hands-on experience and continuous learning";
 
   if (isLoading) {
     return (
       <section id="skills" className="py-20 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="section-heading">Technical Skills</h2>
+            <h2 className="section-heading">{sectionTitle}</h2>
             <div className="w-20 h-1 bg-gradient-to-r from-primary to-hero-gradient-to mx-auto rounded-full mb-4"></div>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Expertise built through years of hands-on experience and continuous learning
+              {sectionDescription}
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -91,10 +106,10 @@ const Skills = () => {
       <section id="skills" className="py-20 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="section-heading">Technical Skills</h2>
+            <h2 className="section-heading">{sectionTitle}</h2>
             <div className="w-20 h-1 bg-gradient-to-r from-primary to-hero-gradient-to mx-auto rounded-full mb-4"></div>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Expertise built through years of hands-on experience and continuous learning
+              {sectionDescription}
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -129,10 +144,10 @@ const Skills = () => {
     <section id="skills" className="py-20 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16 animate-fade-in-up">
-          <h2 className="section-heading">Technical Skills</h2>
+          <h2 className="section-heading">{sectionTitle}</h2>
           <div className="w-20 h-1 bg-gradient-to-r from-primary to-hero-gradient-to mx-auto rounded-full mb-4"></div>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Expertise built through years of hands-on experience and continuous learning
+            {sectionDescription}
           </p>
         </div>
 
