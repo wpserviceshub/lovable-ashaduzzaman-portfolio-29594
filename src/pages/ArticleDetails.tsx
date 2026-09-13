@@ -101,18 +101,6 @@ const ArticleDetails = () => {
             className="prose prose-invert text-muted-foreground"
             dangerouslySetInnerHTML={{ __html: article.content }}
           />
-
-          <div className="mt-8 rounded-2xl border border-border bg-secondary/30 p-6">
-            <h2 className="mb-3 text-xl font-semibold text-foreground">Highlights</h2>
-            <ul className="space-y-3 text-muted-foreground">
-              {article.highlights.map((highlight) => (
-                <li key={highlight} className="flex gap-3">
-                  <span className="mt-2 h-2.5 w-2.5 rounded-full bg-primary" />
-                  <span>{highlight}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
         </div>
       </div>
       <Footer />
