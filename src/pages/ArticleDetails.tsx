@@ -98,7 +98,7 @@ const ArticleDetails = () => {
 
         <div className="rounded-3xl border border-border bg-card p-8 shadow-sm">
           <div
-            className="prose prose-invert text-muted-foreground"
+            className="prose prose-headings:text-foreground prose-h1:text-foreground prose-h2:text-foreground prose-h3:text-foreground prose-h4:text-foreground prose-p:text-muted-foreground prose-strong:text-foreground prose-a:text-primary prose-li:text-muted-foreground prose-blockquote:text-muted-foreground prose-code:text-foreground prose-pre:text-foreground prose-img:rounded-xl prose-img:shadow-md prose-table:text-muted-foreground prose-th:text-foreground prose-td:text-muted-foreground"
             dangerouslySetInnerHTML={{ __html: article.content }}
           />
         </div>
