@@ -4,8 +4,10 @@ import {
   getPosts,
   getProjectBySlug,
   getProjects,
+  getTestimonials,
   CmsPost,
   CmsProject,
+  CmsTestimonial,
 } from "../services/cms";
 
 const defaultQueryOptions = {
@@ -36,6 +38,14 @@ export function usePosts() {
   return useQuery<CmsPost[], Error>({
     queryKey: ["cms", "posts"],
     queryFn: getPosts,
+    ...defaultQueryOptions,
+  });
+}
+
+export function useTestimonials() {
+  return useQuery<CmsTestimonial[], Error>({
+    queryKey: ["cms", "testimonials"],
+    queryFn: getTestimonials,
     ...defaultQueryOptions,
   });
 }

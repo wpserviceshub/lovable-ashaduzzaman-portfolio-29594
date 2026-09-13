@@ -229,6 +229,8 @@ const fallbackArticles: CmsPost[] = [
   },
 ];
 
+const fallbackTestimonials: CmsTestimonial[] = [];
+
 async function fetchApi<T>(path: string, init?: RequestInit): Promise<T> {
   const url = `${API_BASE_URL}${path}`;
   const response = await fetch(url, {
@@ -319,6 +321,16 @@ export interface CmsPost {
   highlights: string[];
 }
 
+export interface CmsTestimonial {
+  id: number;
+  name: string;
+  role: string;
+  company: string;
+  image: string;
+  rating: number;
+  content: string;
+}
+
 export interface HomePageSettings {
   projects_section_title: string;
   projects_content: string;
@@ -397,6 +409,22 @@ function normalizePost(item: any): CmsPost {
   };
 }
 
+function normalizeTestimonial(item: any): CmsTestimonial {
+  const rawRating = item.acf?.rating ?? 5;
+  const rating = typeof rawRating === "number" ? rawRating : Math.max(1, Math.min(5, parseInt(rawRating, 10) || 5));
+  const image = getFeaturedImage(item) || "/placeholder.svg";
+
+  return {
+    id: item.id,
+    name: decodeHtmlEntities(item.title?.rendered ?? ""),
+    role: item.acf?.designation ?? "",
+    company: item.acf?.company_name ?? "",
+    image,
+    rating,
+    content: stripTags(item.content?.rendered ?? ""),
+  };
+}
+
 function getFallbackProjectBySlug(slug: string): CmsProject | null {
   return fallbackProjects.find((project) => project.slug === slug) ?? null;
 }
@@ -431,6 +459,16 @@ export async function getPosts(): Promise<CmsPost[]> {
   } catch (error) {
     console.warn("CMS articles unavailable, using fallback article data", error);
     return fallbackArticles.map((article) => ({ ...article, tags: [...article.tags], highlights: [...article.highlights] }));
+  }
+}
+
+export async function getTestimonials(): Promise<CmsTestimonial[]> {
+  try {
+    const testimonials = await fetchApi<any[]>("/wp/v2/testimonials?per_page=100&_embed");
+    return testimonials.map(normalizeTestimonial);
+  } catch (error) {
+    console.warn("CMS testimonials unavailable, using fallback testimonial data", error);
+    return fallbackTestimonials.map((testimonial) => ({ ...testimonial }));
   }
 }
 

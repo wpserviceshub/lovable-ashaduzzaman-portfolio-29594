@@ -1,66 +1,21 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight, Star, Quote } from "lucide-react";
+import { useTestimonials } from "../hooks/use-cms";
 
 const Testimonials = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const PLACEHOLDER_IMAGE = "/placeholder.svg";
 
-  const testimonials = [
-    {
-      id: 1,
-      name: "Maurice T.",
-      role: "Owner",
-      company: "Freelancer",
-      image: "/lovable-uploads/testimonial-thumb.svg?w=150&h=150&fit=crop&crop=face",
-      rating: 5,
-      content: "Ashaduzzaman did a good job with the a woocomerce project. He was quick to reply to communications and for my convenience worked the same hours as me. I will hire again."
-    },
-    {
-      id: 2,
-      name: "Jason R.",
-      role: "Owner",
-      company: "Freelancer",
-      image: "/lovable-uploads/testimonial-thumb.svg?w=150&h=150&fit=crop&crop=face",
-      rating: 5,
-      content: "Absolutely perfect job from start to finish. very happy with his communication and his professionalism."
-    },
-    {
-      id: 3,
-      name: "Gregor H.",
-      role: "Owner",
-      company: "Freelancer",
-      image: "/lovable-uploads/testimonial-thumb.svg?w=150&h=150&fit=crop&crop=face",
-      rating: 5,
-      content: "Ashaduzzaman did a great job!! I needed a custom plugin for Wordpress and he wrote a plugin and modified it until I was 100% happy. Will use him again in the future. Thanks my friend!"
-    },
-    {
-      id: 4,
-      name: "James A.",
-      role: "Owner",
-      company: "Freelancer",
-      image: "/lovable-uploads/testimonial-thumb.svg?w=150&h=150&fit=crop&crop=face",
-      rating: 5,
-      content: "Ashaduzzaman I really liked the good work done and he delivered on time. I will highly recommend him to anyone and will certainly be using him again."
-    },
-    {
-      id: 5,
-      name: "Evan H.",
-      role: "Founder, Pexl Design",
-      company: "Upwork",
-      image: "/lovable-uploads/testimonial-thumb.svg?w=150&h=150&fit=crop&crop=face",
-      rating: 5,
-      content: "Ashaduzzaman did an excellent job on the WordPress customization project I needed help with, which was outside my area of expertise. He was able to jump into an existing build, clean up the errors I had made, quickly understand the structure, and implement the changes I needed with a high level of precision. What stood out most was his ability to troubleshoot issues efficiently and come back with thoughtful, reliable solutions. He was responsive, easy to communicate with, very fluent in English, and went above and beyond what I originally needed help with. I would absolutely recommend him to anyone looking for a dependable WordPress developer. I’ll definitely be back for more help, both with WordPress customization and other programming tasks."
-    }
-  ];
+  const { data: testimonials = [], isLoading, isError } = useTestimonials();
 
   const nextTestimonial = () => {
-    setCurrentIndex((prevIndex) => 
+    setCurrentIndex((prevIndex) =>
       prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1
     );
   };
 
   const prevTestimonial = () => {
-    setCurrentIndex((prevIndex) => 
+    setCurrentIndex((prevIndex) =>
       prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1
     );
   };
@@ -68,6 +23,22 @@ const Testimonials = () => {
   const goToTestimonial = (index: number) => {
     setCurrentIndex(index);
   };
+
+  if (isLoading || isError || testimonials.length === 0) {
+    return (
+      <section id="testimonials" className="py-20 bg-testimonial-bg">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16 animate-fade-in-up">
+            <h2 className="section-heading">Client Testimonials</h2>
+            <div className="w-20 h-1 bg-gradient-to-r from-primary to-hero-gradient-to mx-auto rounded-full mb-4"></div>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              What clients say about working with me and the results we achieved together
+            </p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="testimonials" className="py-20 bg-testimonial-bg">
@@ -87,7 +58,7 @@ const Testimonials = () => {
               <Quote className="w-12 h-12 text-primary/20 mx-auto mb-6" />
               
               <p className="text-lg md:text-xl text-foreground leading-relaxed mb-8 italic">
-                "{testimonials[currentIndex].content}"
+                &quot;{testimonials[currentIndex].content}&quot;
               </p>
 
               {/* Rating Stars */}
@@ -185,7 +156,7 @@ const Testimonials = () => {
                       ))}
                     </div>
                     <p className="text-muted-foreground text-sm mb-3 leading-relaxed">
-                      "{testimonial.content.slice(0, 120)}..."
+                      &quot;{testimonial.content.slice(0, 120)}&quot;
                     </p>
                     <div>
                       <p className="font-medium text-foreground text-sm">{testimonial.name}</p>
