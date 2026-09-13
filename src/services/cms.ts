@@ -4,6 +4,8 @@ const defaultHeaders = {
   "Content-Type": "application/json",
 };
 
+const fallbackSkills: CmsSkill[] = [];
+
 const fallbackProjects: CmsProject[] = [
   {
     id: 1,
@@ -305,6 +307,14 @@ export interface CmsProject {
   outcome: string;
 }
 
+export interface CmsSkill {
+  id: number;
+  slug: string;
+  name: string;
+  description: string;
+  image: string;
+}
+
 export interface CmsPost {
   id: number;
   slug: string;
@@ -425,6 +435,19 @@ function normalizeTestimonial(item: any): CmsTestimonial {
   };
 }
 
+function normalizeSkill(item: any): CmsSkill {
+  const featuredImage = getFeaturedImage(item);
+  const excerpt = stripTags(item.excerpt?.rendered ?? "");
+
+  return {
+    id: item.id,
+    slug: item.slug,
+    name: decodeHtmlEntities(item.title?.rendered ?? ""),
+    description: excerpt || stripTags(item.content?.rendered ?? ""),
+    image: featuredImage || "/placeholder.svg",
+  };
+}
+
 function getFallbackProjectBySlug(slug: string): CmsProject | null {
   return fallbackProjects.find((project) => project.slug === slug) ?? null;
 }
@@ -469,6 +492,16 @@ export async function getTestimonials(): Promise<CmsTestimonial[]> {
   } catch (error) {
     console.warn("CMS testimonials unavailable, using fallback testimonial data", error);
     return fallbackTestimonials.map((testimonial) => ({ ...testimonial }));
+  }
+}
+
+export async function getSkills(): Promise<CmsSkill[]> {
+  try {
+    const skills = await fetchApi<any[]>("/wp/v2/skills?per_page=100&_embed");
+    return skills.map(normalizeSkill);
+  } catch (error) {
+    console.warn("CMS skills unavailable, using fallback data", error);
+    return fallbackSkills.map((skill) => ({ ...skill }));
   }
 }
 

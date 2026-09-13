@@ -4,9 +4,11 @@ import {
   getPosts,
   getProjectBySlug,
   getProjects,
+  getSkills,
   getTestimonials,
   CmsPost,
   CmsProject,
+  CmsSkill,
   CmsTestimonial,
 } from "../services/cms";
 
@@ -30,6 +32,14 @@ export function useProject(slug?: string) {
     queryKey: ["cms", "project", slug],
     queryFn: () => getProjectBySlug(slug ?? ""),
     enabled: Boolean(slug),
+    ...defaultQueryOptions,
+  });
+}
+
+export function useSkills() {
+  return useQuery<CmsSkill[], Error>({
+    queryKey: ["cms", "skills"],
+    queryFn: getSkills,
     ...defaultQueryOptions,
   });
 }
