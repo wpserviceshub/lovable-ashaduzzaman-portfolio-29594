@@ -15,6 +15,38 @@ interface AboutHomePageSettings extends HomePageSettings {
 
 const iconMap = [Code, Users, Globe, Award] as const;
 
+const parseStatValue = (value: string) => {
+  const match = value.match(/^(\d+)(.*)$/);
+  if (match) {
+    return { numeric: parseInt(match[1], 10), suffix: match[2] || "" };
+  }
+  return { numeric: 0, suffix: "" };
+};
+
+const animateCounter = (from: number, to: number, duration: number, onUpdate: (value: number) => void) => {
+  const start = performance.now();
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (prefersReducedMotion) {
+    onUpdate(to);
+    return;
+  }
+
+  const step = (currentTime: number) => {
+    const elapsed = currentTime - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const value = Math.round(from + (to - from) * eased);
+    onUpdate(value);
+
+    if (progress < 1) {
+      requestAnimationFrame(step);
+    }
+  };
+
+  requestAnimationFrame(step);
+};
+
 const About = () => {
   const { data: homeSettings } = useQuery<AboutHomePageSettings | null>({
     queryKey: ["cms", "home-settings"],
