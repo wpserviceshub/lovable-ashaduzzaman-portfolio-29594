@@ -31,6 +31,10 @@ const Hero = () => {
   const resumeUrl = homeSettings?.resume_upload || "/lovable-uploads/Ashaduzzaman_Resume.pdf";
   const profileImage = homeSettings?.picture || "/lovable-uploads/profile-image-new.png";
 
+  const sanitizedHeroContent = heroContent
+    .replace(/<div[^>]*gtx-trans[^>]*>[\s\S]*?<\/div>/gi, "")
+    .trim();
+
   return (
     <section id="home" className="min-h-screen flex items-center justify-center hero-gradient relative overflow-hidden">
       {/* Tech-Inspired Animated Background */}
@@ -133,9 +137,10 @@ const Hero = () => {
               {subTitle}
             </h2>
 
-            <p className="mb-8 max-w-2xl text-lg leading-relaxed text-primary-foreground/80 animate-hero-description">
-              {heroContent}
-            </p>
+            <div
+              className="mb-8 max-w-2xl text-lg leading-relaxed text-primary-foreground/80 animate-hero-description"
+              dangerouslySetInnerHTML={{ __html: sanitizedHeroContent }}
+            />
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-hero-buttons">
