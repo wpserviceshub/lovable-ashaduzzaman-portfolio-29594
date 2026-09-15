@@ -138,7 +138,7 @@ const Hero = () => {
             </h2>
 
             <div
-              className="mb-8 max-w-2xl text-lg leading-relaxed text-primary-foreground/80 animate-hero-description"
+              className="mb-8 max-w-2xl text-center lg:text-left text-lg leading-relaxed text-primary-foreground/80 animate-hero-description"
               dangerouslySetInnerHTML={{ __html: sanitizedHeroContent }}
             />
 
