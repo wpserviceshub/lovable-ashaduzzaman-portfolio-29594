@@ -6,7 +6,14 @@ interface AboutHomePageSettings extends HomePageSettings {
   section_title?: string;
   highlight_title?: string;
   about_me?: string;
+  service_items?: Array<{
+    number: string;
+    title: string;
+    icon: string;
+  }>;
 }
+
+const iconMap = [Code, Users, Globe, Award] as const;
 
 const About = () => {
   const { data: homeSettings } = useQuery<AboutHomePageSettings | null>({
@@ -15,12 +22,24 @@ const About = () => {
     staleTime: 1000 * 60 * 5,
   });
 
-  const stats = [
+  const fallbackStats = [
     { icon: Code, value: "10+", label: "Years Experience" },
     { icon: Users, value: "150+", label: "Happy Clients" },
     { icon: Globe, value: "4+", label: "Years Experience Global Team" },
     { icon: Award, value: "170+", label: "Projects Completed" },
   ];
+
+  const stats = (homeSettings?.service_items && homeSettings.service_items.length > 0
+    ? homeSettings.service_items.map((item) => ({
+        icon: Code,
+        value: item.number || "",
+        label: item.title || "",
+      }))
+    : fallbackStats
+  ).map((stat, index) => ({
+    ...stat,
+    icon: iconMap[index] ?? Code,
+  }));
 
   const sectionTitle = homeSettings?.section_title || "About Me";
   const highlightTitle = homeSettings?.highlight_title || "Passionate Full-Stack WordPress Developer";
