@@ -1,6 +1,36 @@
 import { ExternalLink, Download, Briefcase, Code, CalendarDays } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { getHomePageSettings, HomePageSettings } from "@/services/cms";
+
+interface HeroHomePageSettings extends HomePageSettings {
+  availability?: string;
+  hero_title?: string;
+  sub_title?: string;
+  hero_content?: string;
+  upwork_link?: string;
+  freelancer_link?: string;
+  booking_link?: string;
+  resume_upload?: string;
+  picture?: string;
+}
 
 const Hero = () => {
+  const { data: homeSettings } = useQuery<HeroHomePageSettings | null>({
+    queryKey: ["cms", "home-settings"],
+    queryFn: getHomePageSettings,
+    staleTime: 1000 * 60 * 5,
+  });
+
+  const availability = homeSettings?.availability || "Available for freelance & long-term projects";
+  const heroTitle = homeSettings?.hero_title || "Building fast, modern, and conversion-focused digital experiences";
+  const subTitle = homeSettings?.sub_title || "Full-Stack WordPress Developer crafting websites for brands, startups, and growing businesses";
+  const heroContent = homeSettings?.hero_content || "I combine clean UI design, strong development foundations, and performance-driven WordPress solutions to create websites that look sharp and deliver results.";
+  const upworkLink = homeSettings?.upwork_link || "https://www.upwork.com/freelancers/~0180789829db368345";
+  const freelancerLink = homeSettings?.freelancer_link || "https://www.freelancer.com/u/creativeit531410";
+  const bookingLink = homeSettings?.booking_link || "https://calendly.com/mukuldiu531410-cse/30min";
+  const resumeUrl = homeSettings?.resume_upload || "/lovable-uploads/Ashaduzzaman_Resume.pdf";
+  const profileImage = homeSettings?.picture || "/lovable-uploads/profile-image-new.png";
+
   return (
     <section id="home" className="min-h-screen flex items-center justify-center hero-gradient relative overflow-hidden">
       {/* Tech-Inspired Animated Background */}
@@ -92,25 +122,25 @@ const Hero = () => {
           <div className="text-center lg:text-left">
             <div className="mb-6 inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-sm font-medium text-primary-foreground/90 shadow-sm backdrop-blur-sm">
               <span className="mr-2 h-2.5 w-2.5 rounded-full bg-primary" />
-              Available for freelance & long-term projects
+              {availability}
             </div>
 
             <h1 className="mb-6 text-4xl font-bold leading-tight text-primary-foreground md:text-6xl animate-hero-title">
-              Building fast, modern, and conversion-focused digital experiences
+              {heroTitle}
             </h1>
 
             <h2 className="mb-6 text-xl font-semibold text-primary-foreground/90 md:text-2xl animate-hero-subtitle">
-              Full-Stack WordPress Developer crafting websites for brands, startups, and growing businesses
+              {subTitle}
             </h2>
 
             <p className="mb-8 max-w-2xl text-lg leading-relaxed text-primary-foreground/80 animate-hero-description">
-              I combine clean UI design, strong development foundations, and performance-driven WordPress solutions to create websites that look sharp and deliver results.
+              {heroContent}
             </p>
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-hero-buttons">
               <a
-                href="https://www.upwork.com/freelancers/~0180789829db368345"
+                href={upworkLink}
                 target="_blank"
                 rel="noreferrer"
                 className="btn-primary group inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 font-medium transition-all duration-300 hover:scale-105"
@@ -121,7 +151,7 @@ const Hero = () => {
               </a>
               
               <a
-                href="https://www.freelancer.com/u/creativeit531410"
+                href={freelancerLink}
                 target="_blank"
                 rel="noreferrer"
                 className="btn-secondary group inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 font-medium transition-all duration-300 hover:scale-105"
@@ -132,7 +162,7 @@ const Hero = () => {
               </a>
               
               <a
-                href="https://calendly.com/mukuldiu531410-cse/30min"
+                href={bookingLink}
                 target="_blank"
                 rel="noreferrer"
                 className="btn-secondary group inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 font-medium transition-all duration-300 hover:scale-105"
@@ -143,7 +173,7 @@ const Hero = () => {
               </a>
               
               <a
-                href="/lovable-uploads/Ashaduzzaman_Resume.pdf"
+                href={resumeUrl}
                 target="_blank"
                 rel="noreferrer"
                 className="btn-secondary group inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 font-medium transition-all duration-300 hover:scale-105"
@@ -161,7 +191,7 @@ const Hero = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-primary to-hero-gradient-to rounded-full blur-2xl opacity-20 scale-110 animate-pulse-glow"></div>
               <div className="relative bg-background p-2 rounded-full shadow-large hover:shadow-xl transition-all duration-500">
                 <img
-                  src="/lovable-uploads/profile-image-new.png"
+                  src={profileImage}
                   alt="Md Ashaduzzaman - Full-Stack WordPress Developer"
                   className="w-80 h-80 object-cover rounded-full transform hover:scale-105 transition-all duration-500"
                 />
