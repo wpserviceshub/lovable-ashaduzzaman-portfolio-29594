@@ -17,6 +17,8 @@ const Projects = () => {
   const archiveButtonText = homeSettings?.projects_archive_button_text || "All Projects";
   const PLACEHOLDER_IMAGE = "/placeholder.svg";
 
+  const cleanSectionDescription = (value: string) => value.replace(/<[^>]*>/g, "").trim();
+
   if (isLoading) {
     return (
       <section id="projects" className="py-20 bg-secondary/30">
@@ -45,7 +47,7 @@ const Projects = () => {
           <h2 className="section-heading">{sectionTitle}</h2>
           <div className="w-20 h-1 bg-gradient-to-r from-primary to-hero-gradient-to mx-auto rounded-full mb-4"></div>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            {sectionDescription}
+            {cleanSectionDescription(sectionDescription)}
           </p>
         </div>
         
