@@ -77,7 +77,7 @@ const Skills = () => {
             <h2 className="section-heading">{sectionTitle}</h2>
             <div className="w-20 h-1 bg-gradient-to-r from-primary to-hero-gradient-to mx-auto rounded-full mb-4"></div>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              {sectionDescription}
+              {stripHtml(sectionDescription)}
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -113,7 +113,7 @@ const Skills = () => {
             <h2 className="section-heading">{sectionTitle}</h2>
             <div className="w-20 h-1 bg-gradient-to-r from-primary to-hero-gradient-to mx-auto rounded-full mb-4"></div>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              {sectionDescription}
+              {stripHtml(sectionDescription)}
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -151,7 +151,7 @@ const Skills = () => {
           <h2 className="section-heading">{sectionTitle}</h2>
           <div className="w-20 h-1 bg-gradient-to-r from-primary to-hero-gradient-to mx-auto rounded-full mb-4"></div>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            {sectionDescription}
+            {stripHtml(sectionDescription)}
           </p>
         </div>
 
