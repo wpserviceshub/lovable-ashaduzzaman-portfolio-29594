@@ -1,9 +1,20 @@
+import { useQuery } from "@tanstack/react-query";
 import { ExternalLink, Github, Eye, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useProjects } from "../hooks/use-cms";
+import { getHomePageSettings, HomePageSettings } from "@/services/cms";
 
 const Projects = () => {
   const { data: projects, isLoading, isError, error } = useProjects();
+  const { data: homeSettings } = useQuery<HomePageSettings>({
+    queryKey: ["cms", "home-settings"],
+    queryFn: getHomePageSettings,
+    staleTime: 1000 * 60 * 5,
+  });
+
+  const sectionTitle = homeSettings?.projects_section_title || "Featured Projects";
+  const sectionDescription = homeSettings?.projects_content || "Showcasing some of my recent work and successful project deliveries";
+  const archiveButtonText = homeSettings?.projects_archive_button_text || "All Projects";
   const PLACEHOLDER_IMAGE = "/placeholder.svg";
 
   if (isLoading) {
@@ -31,10 +42,10 @@ const Projects = () => {
     <section id="projects" className="py-20 bg-secondary/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16 animate-fade-in-up">
-          <h2 className="section-heading">Featured Projects</h2>
+          <h2 className="section-heading">{sectionTitle}</h2>
           <div className="w-20 h-1 bg-gradient-to-r from-primary to-hero-gradient-to mx-auto rounded-full mb-4"></div>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Showcasing some of my recent work and successful project deliveries
+            {sectionDescription}
           </p>
         </div>
         
@@ -142,7 +153,7 @@ const Projects = () => {
 
         <div className="mt-12 text-center">
           <Link to="/projects" className="btn-primary group">
-            <span>All Projects</span>
+            <span>{archiveButtonText}</span>
             <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
