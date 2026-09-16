@@ -54,6 +54,10 @@ const resolveIcon = (name: string): LucideIcon => {
   return iconMap[key] ?? Box;
 };
 
+const stripHtml = (value: string): string => {
+  return value.replace(/<[^>]*>/g, "").trim();
+};
+
 const Skills = () => {
   const { data: skills = [], isLoading, isError } = useSkills();
   const { data: homeSettings } = useQuery<SkillsHomePageSettings | null>({
@@ -129,7 +133,7 @@ const Skills = () => {
                   </div>
 
                   <p className="text-muted-foreground text-sm">
-                    {skill.description}
+                    {stripHtml(skill.description)}
                   </p>
                 </div>
               );
@@ -168,7 +172,7 @@ const Skills = () => {
                 </div>
                 
                 <p className="text-muted-foreground text-sm">
-                  {skill.description}
+                  {stripHtml(skill.description)}
                 </p>
               </div>
             );
