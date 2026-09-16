@@ -1,9 +1,22 @@
+import { useQuery } from "@tanstack/react-query";
 import { Calendar, Clock, ArrowRight, Tag } from "lucide-react";
 import { Link } from "react-router-dom";
 import { usePosts } from "../hooks/use-cms";
+import { getHomePageSettings } from "@/services/cms";
+
+const cleanText = (value: string) => value.replace(/<[^>]*>/g, "").trim();
 
 const Articles = () => {
   const { data: posts, isLoading, isError, error } = usePosts();
+  const { data: homeSettings } = useQuery({
+    queryKey: ["cms", "home-settings"],
+    queryFn: getHomePageSettings,
+    staleTime: 1000 * 60 * 5,
+  });
+
+  const sectionTitle = homeSettings?.articles_section_title || "Latest Articles";
+  const sectionDescription = cleanText(homeSettings?.articles_content || "Sharing knowledge and insights about web development, WordPress, and modern technologies");
+  const archiveButtonText = homeSettings?.articles_archive_button_text || "View All Articles";
   const PLACEHOLDER_IMAGE = "/placeholder.svg";
 
   if (isLoading) {
@@ -31,10 +44,10 @@ const Articles = () => {
     <section id="articles" className="py-20 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16 animate-fade-in-up">
-          <h2 className="section-heading">Latest Articles</h2>
+          <h2 className="section-heading">{sectionTitle}</h2>
           <div className="w-20 h-1 bg-gradient-to-r from-primary to-hero-gradient-to mx-auto rounded-full mb-4"></div>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Sharing knowledge and insights about web development, WordPress, and modern technologies
+            {sectionDescription}
           </p>
         </div>
 
@@ -113,7 +126,7 @@ const Articles = () => {
 
         <div className="text-center mt-12">
           <Link to="/articles" className="btn-primary group">
-            <span>View All Articles</span>
+            <span>{archiveButtonText}</span>
             <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>

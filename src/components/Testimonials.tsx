@@ -1,12 +1,23 @@
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { ChevronLeft, ChevronRight, Star, Quote } from "lucide-react";
 import { useTestimonials } from "../hooks/use-cms";
+import { getHomePageSettings } from "@/services/cms";
+
+const cleanText = (value: string) => value.replace(/<[^>]*>/g, "").trim();
 
 const Testimonials = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const PLACEHOLDER_IMAGE = "/placeholder.svg";
-
   const { data: testimonials = [], isLoading, isError } = useTestimonials();
+  const { data: homeSettings } = useQuery({
+    queryKey: ["cms", "home-settings"],
+    queryFn: getHomePageSettings,
+    staleTime: 1000 * 60 * 5,
+  });
+
+  const sectionTitle = homeSettings?.testimonials_section_title || "Client Testimonials";
+  const sectionDescription = cleanText(homeSettings?.testimonials_content || "What clients say about working with me and the results we achieved together");
+  const PLACEHOLDER_IMAGE = "/placeholder.svg";
 
   const nextTestimonial = () => {
     setCurrentIndex((prevIndex) =>
@@ -29,10 +40,10 @@ const Testimonials = () => {
       <section id="testimonials" className="py-20 bg-testimonial-bg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-fade-in-up">
-            <h2 className="section-heading">Client Testimonials</h2>
+            <h2 className="section-heading">{sectionTitle}</h2>
             <div className="w-20 h-1 bg-gradient-to-r from-primary to-hero-gradient-to mx-auto rounded-full mb-4"></div>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              What clients say about working with me and the results we achieved together
+              {sectionDescription}
             </p>
           </div>
         </div>
@@ -44,10 +55,10 @@ const Testimonials = () => {
     <section id="testimonials" className="py-20 bg-testimonial-bg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16 animate-fade-in-up">
-          <h2 className="section-heading">Client Testimonials</h2>
+          <h2 className="section-heading">{sectionTitle}</h2>
           <div className="w-20 h-1 bg-gradient-to-r from-primary to-hero-gradient-to mx-auto rounded-full mb-4"></div>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            What clients say about working with me and the results we achieved together
+            {sectionDescription}
           </p>
         </div>
 
