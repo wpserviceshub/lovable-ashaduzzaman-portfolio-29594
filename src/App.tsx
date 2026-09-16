@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -10,8 +11,33 @@ import ProjectDetails from "./pages/ProjectDetails";
 import ProjectArchive from "./pages/ProjectArchive";
 import ArticleArchive from "./pages/ArticleArchive";
 import ArticleDetails from "./pages/ArticleDetails";
+import { getGlobalWebsiteSettings } from "./services/cms";
 
 const queryClient = new QueryClient();
+
+const FaviconUpdater = () => {
+  const { data: globalSettings } = useQuery({
+    queryKey: ["cms", "global-settings"],
+    queryFn: getGlobalWebsiteSettings,
+    staleTime: 1000 * 60 * 5,
+  });
+
+  useEffect(() => {
+    const siteIcon = globalSettings?.site_icon;
+    if (!siteIcon) {
+      return;
+    }
+
+    const links = document.querySelectorAll('link[rel="icon"], link[rel="shortcut icon"], link[rel="apple-touch-icon"]');
+    links.forEach((link) => {
+      if (link instanceof HTMLLinkElement) {
+        link.href = siteIcon;
+      }
+    });
+  }, [globalSettings?.site_icon]);
+
+  return null;
+};
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -28,6 +54,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
+      <FaviconUpdater />
       <BrowserRouter>
         <ScrollToTop />
         <Routes>

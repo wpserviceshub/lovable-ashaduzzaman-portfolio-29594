@@ -360,6 +360,8 @@ export interface GlobalWebsiteSettings {
   email: string;
   phone: string;
   address: string;
+  logo?: string;
+  site_icon?: string;
   social: {
     facebook?: string;
     twitter?: string;
