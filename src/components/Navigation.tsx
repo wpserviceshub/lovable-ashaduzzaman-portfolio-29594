@@ -7,6 +7,7 @@ import { getGlobalWebsiteSettings } from "@/services/cms";
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const [logoError, setLogoError] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const { data: globalSettings } = useQuery({
@@ -114,19 +115,12 @@ const Navigation = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link to="/" className="flex-shrink-0" aria-label="Go to home page">
-            {logoUrl ? (
+            {logoUrl && !logoError ? (
               <img
                 src={logoUrl}
                 alt="Site Logo"
-                className="h-11 w-11 object-contain rounded-full border border-primary/20 bg-gradient-to-br from-primary to-accent shadow-sm"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.style.display = 'none';
-                  const fallback = document.createElement('div');
-                  fallback.className = 'flex h-11 w-11 items-center justify-center rounded-full border border-primary/20 bg-gradient-to-br from-primary to-accent text-sm font-bold tracking-[0.2em] text-primary-foreground shadow-sm';
-                  fallback.textContent = 'MA';
-                  target.parentElement?.appendChild(fallback);
-                }}
+                className="object-contain h-auto max-w-[150px] shadow-sm"
+                onError={() => setLogoError(true)}
               />
             ) : (
               <div className="flex h-11 w-11 items-center justify-center rounded-full border border-primary/20 bg-gradient-to-br from-primary to-accent text-sm font-bold tracking-[0.2em] text-primary-foreground shadow-sm">
