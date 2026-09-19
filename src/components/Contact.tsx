@@ -97,14 +97,21 @@ const Contact = () => {
 
     setIsSubmitting(true);
     try {
-      await submitContactForm({
+      const response = await submitContactForm({
         ...formData,
         honeypot: honeypotRef.current?.value ?? "",
       });
-      toast({
-        title: "Message Sent!",
-        description: "Thank you for your message. I'll get back to you soon.",
-      });
+      if (response.success && !response.mail_warning) {
+        toast({
+          title: "Message Sent!",
+          description: "Thank you for your message. I'll get back to you soon.",
+        });
+      } else {
+        toast({
+          title: "Message received (delivery issue)",
+          description: response.message || "Your message was received, but the email notification could not be delivered. Please try again or contact me directly.",
+        });
+      }
       setFormData({ name: "", email: "", message: "" });
       if (honeypotRef.current) {
         honeypotRef.current.value = "";
